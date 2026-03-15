@@ -51,20 +51,8 @@
     </div>
 
     <div class="sidebar-col">
-        <div class="sidebar-card">
-            <div class="sidebar-title">→ Sen de İtiraf Et</div>
-            <form class="itiraf-form-sidebar" method="POST" action="/itiraf-et">
-                <input type="text" name="baslik" placeholder="Başlık" required maxlength="200">
-                <input type="text" name="nick" placeholder="Nick (opsiyonel)" maxlength="50">
-                <select name="kategori">
-                    <option value="itiraf">İtiraf</option>
-                    <option value="ilan">İlan</option>
-                    <option value="kayip">Kayıp Eşya</option>
-                    <option value="soru">Soru-Cevap</option>
-                </select>
-                <textarea name="icerik" placeholder="İtirafını yaz..." required maxlength="2000"></textarea>
-                <button type="submit" class="btn btn-red">İtiraf Et 🤫</button>
-            </form>
+        <div class="sidebar-card sidebar-itiraf-text-card">
+            <a href="/itiraf-et" class="sidebar-itiraf-text">→ Sen de İtiraf Et</a>
         </div>
     </div>
 </div>
