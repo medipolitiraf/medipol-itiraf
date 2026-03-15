@@ -590,19 +590,16 @@ nav a.itiraf-btn:hover { background: #c0392b; }
 
 /* SİDEBAR İTİRAF ET METİN LİNKİ */
 .sidebar-itiraf-text-card {
-    padding: 12px 15px;
+    padding: 10px 15px;
 }
 .sidebar-itiraf-text {
     color: #1a6eb5;
     font-weight: 700;
-    font-size: 14px;
-    text-decoration: none;
+    font-size: 15px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
-.sidebar-itiraf-text:hover { text-decoration: underline; }
-.sidebar-itiraf-sub {
-    font-size: 13px;
-    color: #555;
-}
+.sidebar-itiraf-text:hover { color: #0d4d8a; }
 
 /* İTİRAF ET FORMU */
 .itiraf-form-sidebar input,
