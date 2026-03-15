@@ -19,11 +19,28 @@
 
         <!-- Desktop Nav -->
         <nav id="desktopNav">
-            <a href="/" class="{{ 'active' if request.path == '/' }}">Anasayfa</a>
-            <a href="/?kategori=itiraf">İtiraflar</a>
-            <a href="/?kategori=ilan">İlanlar</a>
-            <a href="/?kategori=kayip">Kayıp Eşya</a>
-            <a href="/?kategori=soru">Soru-Cevap</a>
+            <a href="/" class="{{ 'active' if request.path == '/' and not request.args.get('kategori') }}">Anasayfa</a>
+            <div class="nav-dropdown">
+                <button class="nav-drop-btn">Kategoriler ▾</button>
+                <div class="nav-drop-content">
+                    <div class="nav-drop-group">İtiraf</div>
+                    <a href="/?kategori=ask">Aşk</a>
+                    <a href="/?kategori=aile">Aile</a>
+                    <a href="/?kategori=fikir">Fikir Verin</a>
+                    <a href="/?kategori=komik">Komik</a>
+                    <a href="/?kategori=okul">Okul</a>
+                    <a href="/?kategori=pismanlik">Pişmanlık</a>
+                    <a href="/?kategori=protesto">Protesto</a>
+                    <a href="/?kategori=overheard">Overheard</a>
+                    <a href="/?kategori=diger">Diğer</a>
+                    <div class="nav-drop-divider"></div>
+                    <a href="/?kategori=ilan">İlan</a>
+                    <a href="/?kategori=soru">Soru-Cevap</a>
+                    <a href="/?kategori=kayip">Kayıp Eşya</a>
+                </div>
+            </div>
+            <a href="/sss">S.S.S</a>
+            <a href="/iletisim">İletişim</a>
             <a href="/itiraf-et" class="itiraf-btn">İtiraf Et</a>
         </nav>
 
