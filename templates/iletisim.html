@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %}İletişim - Medipol İtiraf Ediyor{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="main-col">
+        <div class="detay-card">
+            <h1 style="font-size:22px; color:#1a2b4a; margin:0 0 6px;">📬 İletişim</h1>
+            <p style="color:#888; font-size:13px; margin:0 0 24px;">Bize ulaşmak, itiraf silme talebi veya öneri için aşağıdaki kanalları kullanabilirsin.</p>
+
+            <div class="iletisim-karti">
+                <div class="iletisim-ikon">📸</div>
+                <div>
+                    <div class="iletisim-baslik">Instagram</div>
+                    <div class="iletisim-aciklama">DM atabilir, itiraf gönderebilir veya öneri iletebilirsin.</div>
+                    <a href="https://instagram.com/imedipol" target="_blank" class="iletisim-link">@imedipol</a>
+                </div>
+            </div>
+
+            <div class="iletisim-karti">
+                <div class="iletisim-ikon">✉️</div>
+                <div>
+                    <div class="iletisim-baslik">E-Posta</div>
+                    <div class="iletisim-aciklama">İtiraf silme talebi veya şikayet için mail atabilirsin.</div>
+                    <a href="mailto:burakadsiz96@gmail.com" class="iletisim-link">burakadsiz96@gmail.com</a>
+                </div>
+            </div>
+
+            <div style="background:#f8f9fa; border-radius:8px; padding:16px; margin-top:20px; font-size:13px; color:#555; line-height:1.7;">
+                <strong style="color:#1a2b4a;">⚠️ İtiraf Silme Talebi</strong><br>
+                Yayınlanan bir itirafın silinmesini istiyorsan, itiraf başlığını ve nedenini belirterek bize ulaş. Talebini en kısa sürede değerlendiririz.
+            </div>
+        </div>
+
+        <a href="/" style="color:#1a6eb5; text-decoration:none; font-size:13px;">← Anasayfaya Dön</a>
+    </div>
+
+    <div class="sidebar-col">
+        <div class="sidebar-card">
+            <div class="sidebar-title">İtiraf Ara</div>
+            <form class="arama-form" action="/ara" method="get">
+                <input type="text" name="q" placeholder="Arama yap..." required>
+                <button type="submit" class="btn">Ara</button>
+            </form>
+        </div>
+        <div class="sidebar-card">
+            <div class="sidebar-title">Hızlı Bağlantılar</div>
+            <ul style="list-style:none; padding:0; margin:0; line-height:2.2; font-size:14px;">
+                <li><a href="/?kategori=itiraf" style="color:#1a6eb5; text-decoration:none;">💬 İtiraflar</a></li>
+                <li><a href="/itiraf-et" style="color:#1a6eb5; text-decoration:none;">✍️ İtiraf Et</a></li>
+                <li><a href="/sss" style="color:#1a6eb5; text-decoration:none;">❓ S.S.S</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<style>
+.iletisim-karti { display:flex; gap:16px; align-items:flex-start; padding:16px 0; border-bottom:1px solid #f0f0f0; }
+.iletisim-karti:last-of-type { border-bottom:none; }
+.iletisim-ikon { font-size:28px; line-height:1; min-width:40px; text-align:center; }
+.iletisim-baslik { font-weight:700; font-size:15px; color:#1a2b4a; margin-bottom:3px; }
+.iletisim-aciklama { font-size:13px; color:#777; margin-bottom:5px; }
+.iletisim-link { font-size:14px; color:#1a6eb5; text-decoration:none; font-weight:600; }
+.iletisim-link:hover { text-decoration:underline; }
+</style>
+{% endblock %}

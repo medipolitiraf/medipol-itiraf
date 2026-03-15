@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block title %}İtiraf Et - Medipol İtiraf Ediyor{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <!-- SOL: FORM -->
+    <div class="main-col">
+
+        {% if request.args.get('itiraf') == 'beklemede' %}
+        <div style="background:#d4edda; border:1px solid #28a745; border-radius:8px; padding:14px 18px; margin-bottom:16px; font-size:14px; color:#155724;">
+            ✅ İtirafınız alındı! Admin onayından sonra yayınlanacaktır.
+        </div>
+        {% endif %}
+
+        <!-- BİLGİLENDİRME -->
+        <div class="detay-card" style="margin-bottom:16px;">
+            <h2 style="font-size:18px; color:#1a2b4a; margin:0 0 12px;">🤫 İtiraf Etmeden Önce Bil</h2>
+            <ul style="padding-left:18px; margin:0; line-height:2; font-size:14px; color:#444;">
+                <li>Tüm itiraflar <strong>tamamen anonimdir</strong>, kimliğin saklanır.</li>
+                <li>İtirafın admin onayından geçtikten sonra yayınlanır.</li>
+                <li>Hakaret, iftira veya kişisel bilgi içeren itiraflar <strong>reddedilir</strong>.</li>
+                <li>Başkalarına zarar verecek içerik paylaşma; herkes burada güvende olmalı.</li>
+                <li>Nick alanını boş bırakırsan <strong>"Anonim"</strong> olarak görünürsün.</li>
+                <li>Reklam, spam veya nefret söylemi içeren itiraflar silinir.</li>
+            </ul>
+        </div>
+
+        <!-- FORM -->
+        <div class="detay-card">
+            <h2 style="font-size:18px; color:#1a2b4a; margin:0 0 16px;">✍️ İtirafını Yaz</h2>
+            <form method="POST" action="/itiraf-et" class="itiraf-form-full">
+                <div class="form-group">
+                    <label>Başlık <span style="color:#e74c3c;">*</span></label>
+                    <input type="text" name="baslik" placeholder="Kısa ve öz bir başlık yaz..." required maxlength="200">
+                </div>
+                <div class="form-group">
+                    <label>Nick <span style="color:#aaa; font-weight:400;">(boş bırakırsan Anonim)</span></label>
+                    <input type="text" name="nick" placeholder="Anonim" maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label>Kategori</label>
+                    <select name="kategori">
+                        <optgroup label="— İtiraf">
+                            <option value="ask">Aşk</option>
+                            <option value="aile">Aile</option>
+                            <option value="fikir">Fikir Verin</option>
+                            <option value="komik">Komik</option>
+                            <option value="okul">Okul</option>
+                            <option value="pismanlik">Pişmanlık</option>
+                            <option value="protesto">Protesto</option>
+                            <option value="overheard">Overheard</option>
+                            <option value="diger">Diğer</option>
+                        </optgroup>
+                        <optgroup label="— Diğer">
+                            <option value="ilan">İlan</option>
+                            <option value="kayip">Kayıp Eşya</option>
+                            <option value="soru">Soru-Cevap</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>İtirafın <span style="color:#e74c3c;">*</span></label>
+                    <textarea name="icerik" placeholder="Aklındakileri buraya dök... Kimse bilmeyecek. 🤫" required maxlength="2000" rows="8"></textarea>
+                    <div style="text-align:right; font-size:11px; color:#aaa; margin-top:4px;">Maks. 2000 karakter</div>
+                </div>
+                <button type="submit" class="btn btn-red" style="width:100%; padding:13px; font-size:15px;">
+                    İtiraf Et 🤫
+                </button>
+            </form>
+            <p style="font-size:11px; color:#aaa; margin-top:10px; text-align:center;">Tüm itiraflar anonimdir ve admin onayından geçer.</p>
+        </div>
+
+    </div>
+
+    <!-- SAĞ: SIDEBAR -->
+    <div class="sidebar-col">
+        <div class="sidebar-card">
+            <div class="sidebar-title">İtiraf Ara</div>
+            <form class="arama-form" action="/ara" method="get">
+                <input type="text" name="q" placeholder="Arama yap..." required>
+                <button type="submit" class="btn">Ara</button>
+            </form>
+        </div>
+
+        <div class="sidebar-card">
+            <div class="sidebar-title">Kategoriler</div>
+            <ul style="list-style:none; padding:0; margin:0;">
+                <li style="padding:5px 0; border-bottom:1px solid #f0f0f0;"><a href="/?kategori=itiraf" style="color:#1a6eb5; text-decoration:none;">💬 İtiraflar</a></li>
+                <li style="padding:5px 0; border-bottom:1px solid #f0f0f0;"><a href="/?kategori=ilan" style="color:#1a6eb5; text-decoration:none;">📢 İlanlar</a></li>
+                <li style="padding:5px 0; border-bottom:1px solid #f0f0f0;"><a href="/?kategori=kayip" style="color:#1a6eb5; text-decoration:none;">🔍 Kayıp Eşya</a></li>
+                <li style="padding:5px 0;"><a href="/?kategori=soru" style="color:#1a6eb5; text-decoration:none;">❓ Soru-Cevap</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-card" style="background:#fff5f5; border:1px solid #ffcccc;">
+            <div class="sidebar-title" style="color:#e74c3c;">⚠️ Kurallar</div>
+            <p style="font-size:12px; color:#555; line-height:1.7; margin:0;">
+                Hakaret, iftira ve kişisel bilgi paylaşımı yasaktır. Kurallara uymayan itiraflar silinir. Saygılı ol, anonim kal.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<style>
+.itiraf-form-full .form-group { margin-bottom:14px; }
+.itiraf-form-full label { display:block; font-size:13px; font-weight:700; color:#1a2b4a; margin-bottom:5px; }
+.itiraf-form-full input[type="text"],
+.itiraf-form-full select,
+.itiraf-form-full textarea {
+    width:100%; padding:10px 12px; border:1px solid #ddd; border-radius:6px;
+    font-size:14px; box-sizing:border-box; font-family:inherit;
+    transition: border-color .2s;
+}
+.itiraf-form-full input:focus,
+.itiraf-form-full select:focus,
+.itiraf-form-full textarea:focus { outline:none; border-color:#1a6eb5; }
+.itiraf-form-full textarea { resize:vertical; }
+</style>
+{% endblock %}

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli - Medipol İtiraf Ediyor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        /* TABS */
+        .admin-tabs { display:flex; gap:5px; margin-bottom:20px; flex-wrap:wrap; }
+        .admin-tab { padding:9px 18px; border-radius:6px; text-decoration:none; font-size:13px; font-weight:700; background:#f0f0f0; color:#555; }
+        .admin-tab.active { background:#1a2b4a; color:#fff; }
+        .badge-bekleyen { background:#e74c3c; color:#fff; padding:2px 7px; border-radius:10px; font-size:11px; margin-left:5px; }
+
+        /* İSTATİSTİK KARTLARI */
+        .stats-grid { display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+        .stat-card { flex:1; min-width:130px; background:#fff; border:1px solid #e8e8e8; border-radius:10px; padding:14px 16px; text-align:center; }
+        .stat-sayi { font-size:28px; font-weight:800; color:#1a2b4a; line-height:1; }
+        .stat-sayi.kirmizi { color:#e74c3c; }
+        .stat-sayi.yesil { color:#2ecc71; }
+        .stat-sayi.turuncu { color:#f39c12; }
+        .stat-label { font-size:11px; color:#888; margin-top:4px; }
+
+        /* FİLTRE */
+        .filtre-bar { display:flex; gap:8px; margin-bottom:14px; flex-wrap:wrap; align-items:center; }
+        .filtre-btn { padding:6px 14px; border-radius:20px; font-size:12px; font-weight:700; text-decoration:none; background:#f0f0f0; color:#555; border:none; cursor:pointer; }
+        .filtre-btn.active { background:#1a2b4a; color:#fff; }
+
+        /* TOPLU İŞLEM */
+        .toplu-bar { display:flex; gap:8px; align-items:center; margin-bottom:10px; }
+        .toplu-onayla-btn { padding:7px 16px; background:#2ecc71; color:#fff; border:none; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer; }
+        .toplu-onayla-btn:hover { background:#27ae60; }
+        .secim-bilgi { font-size:12px; color:#888; }
+
+        /* TABLO */
+        .icerik-row { display:none; }
+        .icerik-row.open { display:table-row; }
+        .icerik-row td { background:#f8f9fa; padding:12px 16px; font-size:13px; color:#333; border-top:1px dashed #ddd; line-height:1.6; white-space:pre-wrap; word-break:break-word; }
+        .btn-onizle { padding:4px 10px; background:#6c757d; color:#fff; border:none; border-radius:4px; font-size:12px; cursor:pointer; white-space:nowrap; }
+        .btn-onizle.acik { background:#1a6eb5; }
+        .btn-sabitle { padding:4px 10px; background:#9b59b6; color:#fff; border:none; border-radius:4px; font-size:12px; cursor:pointer; white-space:nowrap; text-decoration:none; display:inline-block; }
+        .btn-sabitle.sabitli { background:#f39c12; }
+        .sabit-rozet { color:#f39c12; font-size:14px; margin-right:4px; }
+
+        /* CHECKBOX */
+        input[type="checkbox"] { width:16px; height:16px; cursor:pointer; }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-inner">
+        <a href="/" class="logo">
+            <span class="logo-main">🤫 <span>Medipol</span> İtiraf Ediyor! — Admin</span>
+        </a>
+        <nav>
+            <a href="/">Siteye Dön</a>
+            <a href="/admin/cikis" style="color:#e74c3c;">Çıkış</a>
+        </nav>
+    </div>
+</header>
+
+<div style="max-width:1200px; margin:20px auto; padding:0 15px;">
+
+    <!-- İSTATİSTİK KARTLARI -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-sayi">{{ stats.toplam_itiraf }}</div>
+            <div class="stat-label">Toplam İtiraf</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-sayi kirmizi">{{ stats.bekleyen_itiraf }}</div>
+            <div class="stat-label">Bekleyen İtiraf</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-sayi">{{ stats.toplam_yorum }}</div>
+            <div class="stat-label">Toplam Yorum</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-sayi kirmizi">{{ stats.bekleyen_yorum }}</div>
+            <div class="stat-label">Bekleyen Yorum</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-sayi yesil">{{ stats.bugun_itiraf }}</div>
+            <div class="stat-label">Bugün Gelen</div>
+        </div>
+    </div>
+
+    <!-- SEKMELER -->
+    <div class="admin-tabs">
+        <a href="/admin/panel?sekme=itiraflar" class="admin-tab {{ 'active' if sekme == 'itiraflar' }}">
+            İtiraflar ({{ stats.toplam_itiraf }})
+            {% if stats.bekleyen_itiraf > 0 %}
+                <span class="badge-bekleyen">{{ stats.bekleyen_itiraf }} bekliyor</span>
+            {% endif %}
+        </a>
+        <a href="/admin/panel?sekme=yorumlar" class="admin-tab {{ 'active' if sekme == 'yorumlar' }}">
+            Yorumlar
+            {% if bekleyen_yorum > 0 %}
+                <span class="badge-bekleyen">{{ bekleyen_yorum }} bekliyor</span>
+            {% endif %}
+        </a>
+    </div>
+
+    <!-- İTİRAFLAR SEKMESİ -->
+    {% if sekme == 'itiraflar' %}
+
+    <!-- FİLTRE -->
+    <div class="filtre-bar">
+        <span style="font-size:12px; color:#888; font-weight:700;">Filtre:</span>
+        <a href="/admin/panel?sekme=itiraflar&filtre=hepsi" class="filtre-btn {{ 'active' if filtre == 'hepsi' }}">Hepsi</a>
+        <a href="/admin/panel?sekme=itiraflar&filtre=bekleyen" class="filtre-btn {{ 'active' if filtre == 'bekleyen' }}">
+            Bekleyenler {% if stats.bekleyen_itiraf > 0 %}({{ stats.bekleyen_itiraf }}){% endif %}
+        </a>
+        <a href="/admin/panel?sekme=itiraflar&filtre=sabitli" class="filtre-btn {{ 'active' if filtre == 'sabitli' }}">📌 Sabitliler</a>
+    </div>
+
+    <!-- TOPLU ONAY FORMU -->
+    <form method="POST" action="/admin/toplu-onayla" id="topluForm">
+        <div class="toplu-bar">
+            <button type="submit" class="toplu-onayla-btn" onclick="return onayliMi()">✅ Seçilenleri Onayla</button>
+            <label style="font-size:12px; color:#555; cursor:pointer;">
+                <input type="checkbox" id="tumunuSec" onchange="tumunuSec(this)"> Tümünü Seç
+            </label>
+            <span class="secim-bilgi" id="secimBilgi">0 seçili</span>
+        </div>
+
+    <div class="sidebar-card" style="padding:0; overflow:hidden;">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th style="width:30px;"></th>
+                    <th>#</th>
+                    <th>Başlık</th>
+                    <th>Nick</th>
+                    <th>Kategori</th>
+                    <th>Tarih</th>
+                    <th>Durum</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for itiraf in itiraflar %}
+                <tr style="{% if not itiraf.onaylandi %}background:#fff8f0;{% endif %}">
+                    <td>
+                        {% if not itiraf.onaylandi %}
+                        <input type="checkbox" name="secili_ids" value="{{ itiraf.id }}" class="secim-cb" onchange="secimGuncelle()">
+                        {% endif %}
+                    </td>
+                    <td>{{ itiraf.id }}</td>
+                    <td>
+                        {% if itiraf.sabitlendi %}<span class="sabit-rozet">📌</span>{% endif %}
+                        <a href="/itiraf/{{ itiraf.id }}" target="_blank" style="color:#1a6eb5;">
+                            {{ itiraf.baslik[:45] }}{% if itiraf.baslik|length > 45 %}...{% endif %}
+                        </a>
+                    </td>
+                    <td>{{ itiraf.nick }}</td>
+                    <td>{{ itiraf.kategori }}</td>
+                    <td style="font-size:11px; white-space:nowrap;">{{ itiraf.tarih[:16] }}</td>
+                    <td>
+                        {% if itiraf.onaylandi %}
+                            <span class="badge badge-green">Yayında</span>
+                        {% else %}
+                            <span class="badge badge-red">Bekliyor</span>
+                        {% endif %}
+                    </td>
+                    <td style="display:flex; gap:4px; flex-wrap:wrap;">
+                        <button class="btn-onizle" type="button" onclick="toggleIcerik({{ itiraf.id }}, this)">İçerik</button>
+                        <a href="/admin/onayla/{{ itiraf.id }}" class="btn-onizle"
+                            style="background:{% if itiraf.onaylandi %}#f39c12{% else %}#2ecc71{% endif %};">
+                            {% if itiraf.onaylandi %}Gizle{% else %}Yayınla{% endif %}
+                        </a>
+                        <a href="/admin/sabitle/{{ itiraf.id }}" class="btn-sabitle {% if itiraf.sabitlendi %}sabitli{% endif %}">
+                            {% if itiraf.sabitlendi %}📌 Çöz{% else %}📌 Sabitle{% endif %}
+                        </a>
+                        <a href="/admin/sil/{{ itiraf.id }}"
+                            onclick="return confirm('Bu itirafı silmek istediğinizden emin misiniz?')"
+                            class="btn-onizle" style="background:#e74c3c;">Sil</a>
+                    </td>
+                </tr>
+                <tr class="icerik-row" id="icerik-{{ itiraf.id }}">
+                    <td colspan="8">{{ itiraf.icerik }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </form>
+
+    <!-- YORUMLAR SEKMESİ -->
+    {% elif sekme == 'yorumlar' %}
+    <div class="sidebar-card" style="padding:0; overflow:hidden;">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Yorum</th>
+                    <th>Nick</th>
+                    <th>İtiraf</th>
+                    <th>Tarih</th>
+                    <th>Durum</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for y in yorumlar %}
+                <tr style="{% if not y.onaylandi %}background:#fff8f0;{% endif %}">
+                    <td>{{ y.id }}</td>
+                    <td style="max-width:250px;">{{ y.yorum[:80] }}{% if y.yorum|length > 80 %}...{% endif %}</td>
+                    <td>{{ y.nick }}</td>
+                    <td>
+                        <a href="/itiraf/{{ y.itiraf_id }}" target="_blank" style="color:#1a6eb5; font-size:12px;">
+                            {{ y.itiraf_baslik[:28] }}{% if y.itiraf_baslik|length > 28 %}...{% endif %}
+                        </a>
+                    </td>
+                    <td style="font-size:11px; white-space:nowrap;">{{ y.tarih[:16] }}</td>
+                    <td>
+                        {% if y.onaylandi %}
+                            <span class="badge badge-green">Onaylı</span>
+                        {% else %}
+                            <span class="badge badge-red">Bekliyor</span>
+                        {% endif %}
+                    </td>
+                    <td style="display:flex; gap:5px;">
+                        <a href="/admin/yorum-onayla/{{ y.id }}"
+                            class="btn-onizle"
+                            style="background:{% if y.onaylandi %}#f39c12{% else %}#2ecc71{% endif %};">
+                            {% if y.onaylandi %}Geri Al{% else %}Onayla{% endif %}
+                        </a>
+                        <a href="/admin/yorum-sil/{{ y.id }}"
+                            onclick="return confirm('Bu yorumu silmek istediğinizden emin misiniz?')"
+                            class="btn-onizle" style="background:#e74c3c;">Sil</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+function toggleIcerik(id, btn) {
+    const row = document.getElementById('icerik-' + id);
+    const isOpen = row.classList.toggle('open');
+    btn.textContent = isOpen ? 'Gizle' : 'İçerik';
+    btn.classList.toggle('acik', isOpen);
+}
+
+function tumunuSec(cb) {
+    document.querySelectorAll('.secim-cb').forEach(c => c.checked = cb.checked);
+    secimGuncelle();
+}
+
+function secimGuncelle() {
+    const secili = document.querySelectorAll('.secim-cb:checked').length;
+    document.getElementById('secimBilgi').textContent = secili + ' seçili';
+    document.getElementById('tumunuSec').checked =
+        secili === document.querySelectorAll('.secim-cb').length && secili > 0;
+}
+
+function onayliMi() {
+    const secili = document.querySelectorAll('.secim-cb:checked').length;
+    if (secili === 0) { alert('Lütfen en az bir itiraf seçin.'); return false; }
+    return confirm(secili + ' itirafı onaylamak istiyor musunuz?');
+}
+</script>
+</body>
+</html>

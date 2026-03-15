@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Girişi - Medipol İtiraf Ediyor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <div class="header-inner">
+        <a href="/" class="logo">
+            <span class="logo-main">🤫 <span>Medipol</span> İtiraf Ediyor!</span>
+        </a>
+    </div>
+</header>
+
+<div style="max-width:400px; margin:80px auto; padding:0 20px;">
+    <div class="sidebar-card">
+        <div class="sidebar-title">Admin Girişi</div>
+        {% if hata %}
+        <div style="background:#f8d7da; color:#721c24; padding:10px; border-radius:4px; margin-bottom:15px;">
+            {{ hata }}
+        </div>
+        {% endif %}
+        <form method="POST">
+            <div style="margin-bottom:10px;">
+                <input type="password" name="password" placeholder="Admin Şifresi"
+                    style="width:100%; padding:10px; border:1px solid #ddd; border-radius:4px; font-size:14px;"
+                    required autofocus>
+            </div>
+            <button type="submit" class="btn" style="width:100%; padding:12px;">Giriş Yap</button>
+        </form>
+        <p style="margin-top:15px; font-size:12px; color:#aaa; text-align:center;">
+            Varsayılan şifre: <code>admin123</code>
+        </p>
+    </div>
+</div>
+</body>
+</html>

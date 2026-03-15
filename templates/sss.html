@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Sıkça Sorulan Sorular - Medipol İtiraf Ediyor{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <div class="main-col">
+        <div class="detay-card">
+            <h1 style="font-size:22px; color:#1a2b4a; margin:0 0 20px;">❓ Sıkça Sorulan Sorular</h1>
+
+            <div class="sss-item">
+                <div class="sss-soru">🔒 Gerçekten anonim mi?</div>
+                <div class="sss-cevap">
+                    Evet, tamamen anonimdir. İtiraf gönderdiğinde kimlik bilgin saklanmaz. Nick alanını boş bırakırsan "Anonim" olarak görünürsün. Hiçbir kişisel veri toplanmaz.
+                </div>
+            </div>
+
+            <div class="sss-item">
+                <div class="sss-soru">⏳ İtirafım neden hemen yayınlanmıyor?</div>
+                <div class="sss-cevap">
+                    Tüm itiraflar admin onayından geçer. Bu sayede hakaret, iftira veya spam içerikli paylaşımlar engellenir. Onay genellikle birkaç saat içinde gerçekleşir.
+                </div>
+            </div>
+
+            <div class="sss-item">
+                <div class="sss-soru">🚫 Hangi içerikler reddedilir?</div>
+                <div class="sss-cevap">
+                    Hakaret ve küfür içeren, belirli bir kişiyi hedef alan, kişisel bilgi (telefon, adres vb.) içeren, reklam/spam niteliğinde olan veya nefret söylemi barındıran itiraflar onaylanmaz ve silinir.
+                </div>
+            </div>
+
+            <div class="sss-item">
+                <div class="sss-soru">🎭 Nick seçmek zorunda mıyım?</div>
+                <div class="sss-cevap">
+                    Hayır. Nick alanını boş bırakırsan itirafın "Anonim" adıyla yayınlanır. Gerçek adını ya da tanınabilir bir nick kullanmaman önerilir.
+                </div>
+            </div>
+
+            <div class="sss-item">
+                <div class="sss-soru">🗑️ İtirafımı silebilir miyim?</div>
+                <div class="sss-cevap">
+                    Şu an itiraf sahipliği doğrulaması olmadığı için kullanıcı tarafından silme mümkün değil. Silme talebini iletişim sayfasından bize iletebilirsin, itirafını kontrol edip sileriz.
+                </div>
+            </div>
+
+        </div>
+
+        <a href="/" style="color:#1a6eb5; text-decoration:none; font-size:13px;">← Anasayfaya Dön</a>
+    </div>
+
+    <div class="sidebar-col">
+        <div class="sidebar-card">
+            <div class="sidebar-title">İtiraf Ara</div>
+            <form class="arama-form" action="/ara" method="get">
+                <input type="text" name="q" placeholder="Arama yap..." required>
+                <button type="submit" class="btn">Ara</button>
+            </form>
+        </div>
+        <div class="sidebar-card">
+            <div class="sidebar-title">Hızlı Bağlantılar</div>
+            <ul style="list-style:none; padding:0; margin:0; line-height:2.2; font-size:14px;">
+                <li><a href="/?kategori=itiraf" style="color:#1a6eb5; text-decoration:none;">💬 İtiraflar</a></li>
+                <li><a href="/itiraf-et" style="color:#1a6eb5; text-decoration:none;">✍️ İtiraf Et</a></li>
+                <li><a href="/iletisim" style="color:#1a6eb5; text-decoration:none;">📬 İletişim</a></li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+<style>
+.sss-item { border-bottom:1px solid #f0f0f0; padding:14px 0; }
+.sss-item:last-child { border-bottom:none; }
+.sss-soru { font-weight:700; font-size:15px; color:#1a2b4a; margin-bottom:6px; }
+.sss-cevap { font-size:14px; color:#555; line-height:1.7; }
+</style>
+{% endblock %}

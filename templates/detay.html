@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block title %}{{ itiraf.baslik }} - Medipol İtiraf Ediyor{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <!-- SOL: İTİRAF DETAYI -->
+    <div class="main-col">
+
+        <div class="detay-card">
+            <h1 class="detay-baslik">{{ itiraf.baslik }}</h1>
+            <div class="itiraf-meta" style="margin-bottom:15px;">
+                <span class="nick">Nick: {{ itiraf.nick }}</span>
+                <span>|</span>
+                <span>{{ itiraf.tarih[:16] }}</span>
+                <span>|</span>
+                <span class="kategori-badge">
+                    {% if itiraf.kategori == 'itiraf' %}İtiraf
+                    {% elif itiraf.kategori == 'ilan' %}İlan
+                    {% elif itiraf.kategori == 'kayip' %}Kayıp Eşya
+                    {% elif itiraf.kategori == 'soru' %}Soru-Cevap
+                    {% endif %}
+                </span>
+            </div>
+
+            <p class="detay-icerik">{{ itiraf.icerik }}</p>
+
+            <!-- REAKSİYONLAR -->
+            <div class="reaksiyonlar" id="reaksiyonlar">
+                {% set emoji_list = ['❤️', '😂', '😮', '😢', '👍', '🔥'] %}
+                {% for emoji in emoji_list %}
+                {% set sayi = namespace(val=0) %}
+                {% for r in reaksiyonlar %}
+                    {% if r.emoji == emoji %}{% set sayi.val = r.sayi %}{% endif %}
+                {% endfor %}
+                <button class="reaksiyon-btn" onclick="reaksiyon('{{ emoji }}', {{ itiraf.id }})" data-emoji="{{ emoji }}" data-id="{{ itiraf.id }}">
+                    {{ emoji }} <span class="reaksiyon-sayi" id="sayi-{{ emoji|replace('️','') }}">{{ sayi.val }}</span>
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- YORUMLAR -->
+        <div class="detay-card">
+            <div class="yorumlar-baslik">💬 Yorumlar ({{ yorumlar|length }})</div>
+
+            {% if yorumlar %}
+                {% for yorum in yorumlar %}
+                <div class="yorum-detay">
+                    <span class="yorum-detay-nick">{{ yorum.nick }}</span>
+                    <span class="yorum-detay-tarih">{{ yorum.tarih[:16] }}</span>
+                    <div class="yorum-detay-text">{{ yorum.yorum }}</div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p style="color:#aaa; text-align:center; padding:20px;">Henüz yorum yok. İlk yorumu sen yap!</p>
+            {% endif %}
+
+            <!-- YORUM BEKLİYOR MESAJI -->
+            {% if request.args.get('yorum') == 'beklemede' %}
+            <div style="background:#fff3cd; border:1px solid #ffc107; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-size:13px; color:#856404;">
+                ⏳ Yorumunuz admin onayına gönderildi. Onaylandıktan sonra görünecektir.
+            </div>
+            {% endif %}
+
+            <!-- YORUM FORMU -->
+            <div class="yorum-form">
+                <div style="font-weight:700; margin-bottom:10px; color:#1a2b4a;">Yorum Yap</div>
+                <form method="POST" action="/yorum-yap">
+                    <input type="hidden" name="itiraf_id" value="{{ itiraf.id }}">
+                    <input type="text" name="nick" placeholder='Nick (boş = "Anonim")' maxlength="50">
+                    <textarea name="yorum" placeholder="Yorumunu yaz..." required maxlength="500"></textarea>
+                    <button type="submit" class="btn">Yorum Gönder</button>
+                </form>
+            </div>
+        </div>
+
+        <a href="/" style="color:#1a6eb5; text-decoration:none; font-size:13px;">← Geri Dön</a>
+    </div>
+
+    <!-- ORTA: ARAMA + POPÜLER -->
+    <div class="sidebar-col">
+        <div class="sidebar-card">
+            <div class="sidebar-title">İtiraf Ara</div>
+            <form class="arama-form" action="/ara" method="get">
+                <input type="text" name="q" placeholder="Arama yap..." required>
+                <button type="submit" class="btn">Ara</button>
+            </form>
+        </div>
+
+        <div class="sidebar-card">
+            <div class="sidebar-title">Popüler İtiraflar (Son 7 Gün)</div>
+            {% if populer %}
+            <ul class="populer-liste">
+                {% for p in populer %}
+                <li>
+                    <a href="/itiraf/{{ p.id }}">{{ p.baslik }}</a>
+                    <span class="populer-yorum-sayi">💬 {{ p.yorum_sayisi }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+
+        <div class="sidebar-card">
+            <div class="sidebar-title">Yeni Yorumlar</div>
+            {% set colors = ['#e74c3c','#3498db','#2ecc71','#9b59b6','#f39c12','#1abc9c'] %}
+            {% for y in yeni_yorumlar %}
+            <div class="yorum-item">
+                <div class="yorum-avatar" style="background: {{ colors[loop.index0 % 6] }}">
+                    {{ y.nick[0]|upper }}
+                </div>
+                <div class="yorum-content">
+                    <div>
+                        <span class="yorum-nick">{{ y.nick }}</span>
+                        <span style="font-size:11px; color:#aaa;"> - </span>
+                        <a href="/itiraf/{{ y.itiraf_id }}" class="yorum-itiraf-link">{{ y.baslik[:25] }}{% if y.baslik|length > 25 %}...{% endif %}</a>
+                    </div>
+                    <div class="yorum-text">{{ y.yorum }}</div>
+                    <div class="yorum-tarih">{{ y.tarih[:10] }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- SAĞ: İTİRAF ET FORMU -->
+    <div class="sidebar-col">
+        <div class="sidebar-card">
+            <div class="sidebar-title">→ Sen de İtiraf Et</div>
+            <form class="itiraf-form-sidebar" method="POST" action="/itiraf-et">
+                <input type="text" name="baslik" placeholder="Başlık (zorunlu)" required maxlength="200">
+                <input type="text" name="nick" placeholder='Nick (boş = "Anonim")' maxlength="50">
+                <select name="kategori">
+                    <option value="itiraf">İtiraf</option>
+                    <option value="ilan">İlan</option>
+                    <option value="kayip">Kayıp Eşya</option>
+                    <option value="soru">Soru-Cevap</option>
+                </select>
+                <textarea name="icerik" placeholder="İtirafını yaz..." required maxlength="2000"></textarea>
+                <button type="submit" class="btn btn-red">İtiraf Et 🤫</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

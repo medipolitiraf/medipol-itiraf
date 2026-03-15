@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}Arama: {{ q }} - Medipol İtiraf Ediyor{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="main-col">
+        <div class="ara-baslik">🔍 "{{ q }}" için {{ itiraflar|length }} sonuç bulundu</div>
+
+        {% if itiraflar %}
+            {% for itiraf in itiraflar %}
+            <div class="itiraf-card">
+                <a href="/itiraf/{{ itiraf.id }}" class="itiraf-baslik">{{ itiraf.baslik }}</a>
+                <p class="itiraf-icerik">{{ itiraf.icerik }}</p>
+                <div class="itiraf-meta">
+                    <span class="nick">Nick: {{ itiraf.nick }}</span>
+                    <span>|</span>
+                    <span>{{ itiraf.tarih[:10] }}</span>
+                    <span class="yorum-sayi">{{ itiraf.yorum_sayisi }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="bos-sonuc">
+                😶 "{{ q }}" için sonuç bulunamadı.
+            </div>
+        {% endif %}
+
+        <a href="/" style="color:#1a6eb5; text-decoration:none; font-size:13px; display:block; margin-top:15px;">← Ana Sayfaya Dön</a>
+    </div>
+
+    <div class="sidebar-col">
+        <div class="sidebar-card">
+            <div class="sidebar-title">Tekrar Ara</div>
+            <form class="arama-form" action="/ara" method="get">
+                <input type="text" name="q" value="{{ q }}" required>
+                <button type="submit" class="btn">Ara</button>
+            </form>
+        </div>
+
+        <div class="sidebar-card">
+            <div class="sidebar-title">Popüler İtiraflar</div>
+            <ul class="populer-liste">
+                {% for p in populer %}
+                <li>
+                    <a href="/itiraf/{{ p.id }}">{{ p.baslik }}</a>
+                    <span class="populer-yorum-sayi">💬 {{ p.yorum_sayisi }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="sidebar-col">
+        <div class="sidebar-card">
+            <div class="sidebar-title">→ Sen de İtiraf Et</div>
+            <form class="itiraf-form-sidebar" method="POST" action="/itiraf-et">
+                <input type="text" name="baslik" placeholder="Başlık" required maxlength="200">
+                <input type="text" name="nick" placeholder="Nick (opsiyonel)" maxlength="50">
+                <select name="kategori">
+                    <option value="itiraf">İtiraf</option>
+                    <option value="ilan">İlan</option>
+                    <option value="kayip">Kayıp Eşya</option>
+                    <option value="soru">Soru-Cevap</option>
+                </select>
+                <textarea name="icerik" placeholder="İtirafını yaz..." required maxlength="2000"></textarea>
+                <button type="submit" class="btn btn-red">İtiraf Et 🤫</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

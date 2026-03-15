@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{% block title %}Medipol İtiraf Ediyor{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤫</text></svg>">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="header-inner">
+        <a href="/" class="logo">
+            <span class="logo-main">🤫 <span>Medipol</span> İtiraf Ediyor!</span>
+            <span class="logo-sub">Medipol Üniversitesi · İtiraf Sitesi</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <nav id="desktopNav">
+            <a href="/" class="{{ 'active' if request.path == '/' }}">Anasayfa</a>
+            <a href="/?kategori=itiraf">İtiraflar</a>
+            <a href="/?kategori=ilan">İlanlar</a>
+            <a href="/?kategori=kayip">Kayıp Eşya</a>
+            <a href="/?kategori=soru">Soru-Cevap</a>
+            <a href="/itiraf-et" class="itiraf-btn">İtiraf Et</a>
+        </nav>
+
+        <!-- Hamburger -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Menü">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+
+    <!-- Mobil Dropdown (üstten) -->
+    <div class="mobile-dropdown" id="mobileDropdown">
+        <a href="/" class="drop-item {{ 'active' if request.path == '/' and not request.args.get('kategori') }}">ANASAYFA</a>
+
+        <div class="drop-accordion">
+            <button class="drop-item drop-acc-btn" id="dropKategoriBtn">
+                KATEGORİLER
+                <span class="drop-arrow">▾</span>
+            </button>
+            <div class="drop-acc-content" id="dropKategoriContent">
+                <a href="/?kategori=ask" class="drop-sub-item">AŞK</a>
+                <a href="/?kategori=aile" class="drop-sub-item">AİLE</a>
+                <a href="/?kategori=fikir" class="drop-sub-item">FİKİR VERİN</a>
+                <a href="/?kategori=komik" class="drop-sub-item">KOMİK</a>
+                <a href="/?kategori=okul" class="drop-sub-item">OKUL</a>
+                <a href="/?kategori=pismanlik" class="drop-sub-item">PİŞMANLIK</a>
+                <a href="/?kategori=protesto" class="drop-sub-item">PROTESTO</a>
+                <a href="/?kategori=overheard" class="drop-sub-item">OVERHEARD</a>
+                <a href="/?kategori=diger" class="drop-sub-item">DİĞER</a>
+                <a href="/?kategori=ilan" class="drop-sub-item drop-sub-plus">⊕ İLAN</a>
+                <a href="/?kategori=soru" class="drop-sub-item drop-sub-plus">⊕ SORU-CEVAP</a>
+                <a href="/?kategori=kayip" class="drop-sub-item drop-sub-plus">⊕ KAYIP-BULUNAN EŞYA</a>
+            </div>
+        </div>
+
+        <a href="/sss" class="drop-item">S.S.S</a>
+        <a href="/iletisim" class="drop-item">İLETİŞİM</a>
+        <a href="/itiraf-et" class="drop-item drop-itiraf-btn">🤫 İTİRAF ET</a>
+    </div>
+</header>
+
+<!-- DUYURU BANDI -->
+<div class="duyuru">
+    📢 Tüm itiraflar anonimdir. Saygılı olun. | Instagram: <strong>@imedipol</strong>
+</div>
+
+{% block content %}{% endblock %}
+
+<!-- Floating İtiraf Et Butonu -->
+<a href="/itiraf-et" class="float-itiraf-btn">
+    🤫 İtiraf Et
+</a>
+
+<footer>
+    <div class="footer-inner">
+        <div class="footer-col">
+            <div class="footer-col-title">Medipol İtiraf Ediyor</div>
+            <p>Medipol Üniversitesi'nin anonim itiraf sitesi. İtiraf ve yorumlarınızı tamamen anonim olarak paylaşabilirsiniz.</p>
+            <p style="margin-top:8px;">📸 <a href="https://instagram.com/imedipol" target="_blank" style="color:#90b8e8;">@imedipol</a></p>
+        </div>
+        <div class="footer-col">
+            <div class="footer-col-title">Yasal Bildirim</div>
+            <p>Bu site öğrenciler tarafından kurulmuş, herkesin içerik yazabildiği bir platformdur. İçerik kaldırma talepleri için iletişim sayfasından bize ulaşabilirsiniz.</p>
+        </div>
+        <div class="footer-col">
+            <div class="footer-col-title">İletişim</div>
+            <p>Hukuk, içerik kaldırma ve iletişim için:</p>
+            <p style="margin-top:6px;">📧 <a href="mailto:burakadsiz96@gmail.com" style="color:#90b8e8;">burakadsiz96@gmail.com</a></p>
+            <p style="margin-top:6px;">📸 <a href="https://instagram.com/imedipol" target="_blank" style="color:#90b8e8;">instagram.com/imedipol</a></p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2025 Medipol İtiraf Ediyor &bull; Tüm itiraflar anonimdir &bull; <a href="/admin" style="color:#90b8e8;">Admin</a>
+    </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script>
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const dropdown = document.getElementById('mobileDropdown');
+
+    hamburgerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.toggle('open');
+        hamburgerBtn.classList.toggle('active', isOpen);
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!hamburgerBtn.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.remove('open');
+            hamburgerBtn.classList.remove('active');
+        }
+    });
+
+    dropdown.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            dropdown.classList.remove('open');
+            hamburgerBtn.classList.remove('active');
+        });
+    });
+
+    // KATEGORİLER accordion
+    const dropKategoriBtn = document.getElementById('dropKategoriBtn');
+    const dropKategoriContent = document.getElementById('dropKategoriContent');
+    dropKategoriBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropKategoriContent.classList.toggle('open');
+        dropKategoriBtn.classList.toggle('acc-open', isOpen);
+    });
+</script>
+</body>
+</html>

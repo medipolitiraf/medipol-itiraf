@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+{% block title %}Medipol İtiraf Ediyor - Anasayfa{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    <!-- SOL: İTİRAF LİSTESİ -->
+    <div class="main-col">
+
+        <!-- TABS -->
+        <div class="tabs">
+            <a href="/?kategori=itiraf" class="tab-btn {{ 'active' if kategori == 'itiraf' }}">İtiraflar</a>
+            <a href="/?kategori=ilan" class="tab-btn {{ 'active' if kategori == 'ilan' }}">İlanlar</a>
+            <a href="/?kategori=kayip" class="tab-btn {{ 'active' if kategori == 'kayip' }}">Kayıp Eşya</a>
+            <a href="/?kategori=soru" class="tab-btn {{ 'active' if kategori == 'soru' }}">Soru-Cevap</a>
+        </div>
+
+        {% if request.args.get('itiraf') == 'beklemede' %}
+        <div style="background:#d4edda; border:1px solid #28a745; border-radius:6px; padding:12px 16px; margin-bottom:12px; font-size:13px; color:#155724;">
+            ✅ İtirafınız alındı! Admin onayından sonra yayınlanacaktır.
+        </div>
+        {% endif %}
+
+        {% if itiraflar %}
+            {% for itiraf in itiraflar %}
+            <div class="itiraf-card {% if itiraf.sabitlendi %}itiraf-sabitli{% endif %}">
+                {% if itiraf.sabitlendi %}<span class="sabit-rozet-kart">📌 Sabitlendi</span>{% endif %}
+                <a href="/itiraf/{{ itiraf.id }}" class="itiraf-baslik">{{ itiraf.baslik }}</a>
+                <div class="itiraf-meta">
+                    <span class="nick">Nick: {{ itiraf.nick }}</span>
+                    <span>|</span>
+                    <span>{{ itiraf.tarih[:10] }}</span>
+                    <span>|</span>
+                    <span class="kategori-badge">{{ kategori_etiketler.get(itiraf.kategori, itiraf.kategori) }}</span>
+                    <span class="yorum-sayi">{{ itiraf.yorum_sayisi }}</span>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- PAGİNATION -->
+            {% if toplam_sayfa > 1 %}
+            <div class="pagination">
+                {% if sayfa > 1 %}
+                    <a href="?kategori={{ kategori }}&sayfa={{ sayfa - 1 }}">« Önceki</a>
+                {% endif %}
+                {% for p in range(1, toplam_sayfa + 1) %}
+                    {% if p == sayfa %}
+                        <span class="active">{{ p }}</span>
+                    {% elif p <= 3 or p >= toplam_sayfa - 2 or (p >= sayfa - 1 and p <= sayfa + 1) %}
+                        <a href="?kategori={{ kategori }}&sayfa={{ p }}">{{ p }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if sayfa < toplam_sayfa %}
+                    <a href="?kategori={{ kategori }}&sayfa={{ sayfa + 1 }}">Sonraki »</a>
+                {% endif %}
+            </div>
+            {% endif %}
+
+        {% else %}
+            <div class="bos-sonuc">
+                😶 Henüz bu kategoride itiraf yok. İlk itirafı sen yap!
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- ORTA: ARAMA + POPÜLER -->
+    <div class="sidebar-col">
+
+        <!-- ARAMA -->
+        <div class="sidebar-card">
+            <div class="sidebar-title">İtiraf Ara</div>
+            <form class="arama-form" action="/ara" method="get">
+                <input type="text" name="q" placeholder="Arama yap..." required>
+                <button type="submit" class="btn">Ara</button>
+            </form>
+        </div>
+
+        <!-- POPÜLER İTİRAFLAR -->
+        <div class="sidebar-card">
+            <div class="sidebar-title">Popüler İtiraflar (Son 7 Gün)</div>
+            {% if populer %}
+            <ul class="populer-liste">
+                {% for p in populer %}
+                <li>
+                    <a href="/itiraf/{{ p.id }}">{{ p.baslik }}</a>
+                    <span class="populer-yorum-sayi">💬 {{ p.yorum_sayisi }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p style="color:#aaa; font-size:13px;">Henüz itiraf yok.</p>
+            {% endif %}
+        </div>
+
+        <!-- YENİ YORUMLAR -->
+        <div class="sidebar-card">
+            <div class="sidebar-title">Yeni Yorumlar</div>
+            {% set colors = ['#e74c3c','#3498db','#2ecc71','#9b59b6','#f39c12','#1abc9c'] %}
+            {% for y in yeni_yorumlar %}
+            <div class="yorum-item">
+                <div class="yorum-avatar" style="background: {{ colors[loop.index0 % 6] }}">
+                    {{ y.nick[0]|upper }}
+                </div>
+                <div class="yorum-content">
+                    <div>
+                        <span class="yorum-nick">{{ y.nick }}</span>
+                        <span style="font-size:11px; color:#aaa;"> - </span>
+                        <a href="/itiraf/{{ y.itiraf_id }}" class="yorum-itiraf-link">{{ y.baslik[:30] }}{% if y.baslik|length > 30 %}...{% endif %}</a>
+                    </div>
+                    <div class="yorum-text">{{ y.yorum }}</div>
+                    <div class="yorum-tarih">{{ y.tarih[:10] }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- SAĞ: İTİRAF ET FORMU -->
+    <div class="sidebar-col" id="itiraf-et-form">
+        <div class="sidebar-card">
+            <div class="sidebar-title">→ Sen de İtiraf Et</div>
+            <form class="itiraf-form-sidebar" method="POST" action="/itiraf-et">
+                <input type="text" name="baslik" placeholder="Başlık (zorunlu)" required maxlength="200">
+                <input type="text" name="nick" placeholder='Nick (boş = "Anonim")' maxlength="50">
+                <select name="kategori">
+                    <optgroup label="— İtiraf">
+                        <option value="ask">Aşk</option>
+                        <option value="aile">Aile</option>
+                        <option value="fikir">Fikir Verin</option>
+                        <option value="komik">Komik</option>
+                        <option value="okul">Okul</option>
+                        <option value="pismanlik">Pişmanlık</option>
+                        <option value="protesto">Protesto</option>
+                        <option value="diger">Diğer</option>
+                    </optgroup>
+                    <optgroup label="— Diğer">
+                        <option value="ilan">İlan</option>
+                        <option value="kayip">Kayıp Eşya</option>
+                        <option value="soru">Soru-Cevap</option>
+                    </optgroup>
+                </select>
+                <textarea name="icerik" placeholder="İtirafını yaz... (anonim)" required maxlength="2000"></textarea>
+                <button type="submit" class="btn btn-red">İtiraf Et 🤫</button>
+            </form>
+            <p style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">Tüm itiraflar anonimdir.</p>
+        </div>
+
+        <!-- KATEGORİLER -->
+        <div class="sidebar-card">
+            <div class="sidebar-title">Kategoriler</div>
+            <ul style="list-style:none;">
+                <li style="padding:5px 0; border-bottom:1px solid #f0f0f0;">
+                    <a href="/?kategori=itiraf" style="color:#1a6eb5; text-decoration:none;">💬 İtiraflar</a>
+                </li>
+                <li style="padding:5px 0; border-bottom:1px solid #f0f0f0;">
+                    <a href="/?kategori=ilan" style="color:#1a6eb5; text-decoration:none;">📢 İlanlar</a>
+                </li>
+                <li style="padding:5px 0; border-bottom:1px solid #f0f0f0;">
+                    <a href="/?kategori=kayip" style="color:#1a6eb5; text-decoration:none;">🔍 Kayıp Eşya</a>
+                </li>
+                <li style="padding:5px 0;">
+                    <a href="/?kategori=soru" style="color:#1a6eb5; text-decoration:none;">❓ Soru-Cevap</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

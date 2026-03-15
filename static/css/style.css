@@ -1,0 +1,785 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    font-size: 14px;
+}
+
+/* ========================
+   HEADER
+======================== */
+header {
+    background: #1a2b4a;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 15px;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+}
+
+.logo-main {
+    font-size: 23px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+.logo-main span { color: #e74c3c; }
+
+.logo-sub {
+    font-size: 10px;
+    color: #aaa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Desktop nav */
+nav {
+    display: flex;
+    gap: 5px;
+}
+
+nav a {
+    color: #ccc;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+}
+
+nav a:hover, nav a.active {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+}
+
+nav a.itiraf-btn {
+    background: #e74c3c;
+    color: #fff;
+}
+
+nav a.itiraf-btn:hover { background: #c0392b; }
+
+/* Hamburger */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 8px;
+    border: none;
+    background: none;
+}
+
+.hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+
+/* Hamburger animasyonu */
+.hamburger.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ========================
+   MOBİL DROPDOWN (üstten)
+======================== */
+.mobile-dropdown {
+    display: none;
+    flex-direction: column;
+    background: #2d3a4a;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.mobile-dropdown.open {
+    display: flex;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.drop-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #ccc;
+    text-decoration: none;
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.2s, color 0.2s;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.drop-item:hover, .drop-item.active {
+    background: rgba(255,255,255,0.07);
+    color: #fff;
+}
+
+.drop-arrow {
+    font-size: 16px;
+    transition: transform 0.25s;
+    color: #aaa;
+}
+
+.drop-acc-btn.acc-open .drop-arrow { transform: rotate(180deg); }
+
+/* Accordion alt menü */
+.drop-acc-content {
+    display: none;
+    flex-direction: column;
+    background: #253347;
+}
+.drop-acc-content.open { display: flex; }
+
+.drop-sub-item {
+    color: #bbb;
+    text-decoration: none;
+    padding: 11px 20px 11px 32px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.15s, color 0.15s;
+    display: block;
+}
+
+.drop-sub-item:hover {
+    background: rgba(255,255,255,0.07);
+    color: #fff;
+}
+
+.drop-sub-plus { color: #8ab4d4; }
+
+.drop-itiraf-btn {
+    background: #e74c3c !important;
+    color: #fff !important;
+    justify-content: center;
+    font-size: 14px;
+}
+
+/* ========================
+   DUYURU
+======================== */
+.duyuru {
+    background: #2980b9;
+    color: #fff;
+    text-align: center;
+    padding: 7px 15px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* ========================
+   ANA LAYOUT
+======================== */
+.container {
+    max-width: 1200px;
+    margin: 15px auto;
+    padding: 0 12px;
+    display: grid;
+    grid-template-columns: 1fr 280px 240px;
+    gap: 20px;
+}
+
+/* ========================
+   TABS
+======================== */
+.tabs {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    white-space: nowrap;
+    padding-bottom: 0;
+}
+
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+    padding: 9px 16px;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    background: #fff;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    color: #555;
+    text-decoration: none;
+    border-radius: 4px 4px 0 0;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.tab-btn:hover { background: #f0f0f0; }
+.tab-btn.active {
+    background: #1a2b4a;
+    color: #fff;
+    border-color: #1a2b4a;
+}
+
+/* ========================
+   İTİRAF KARTI
+======================== */
+.itiraf-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 10px;
+    transition: box-shadow 0.2s;
+    cursor: pointer;
+}
+
+.itiraf-card:hover { box-shadow: 0 3px 12px rgba(0,0,0,0.1); }
+
+.itiraf-sabitli { border-left: 3px solid #f39c12; }
+
+.sabit-rozet-kart {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #f39c12;
+    background: #fff8e6;
+    border: 1px solid #f5d28a;
+    border-radius: 4px;
+    padding: 2px 7px;
+    margin-bottom: 5px;
+}
+
+.itiraf-baslik {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a6eb5;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+.itiraf-baslik:hover { text-decoration: underline; }
+
+.itiraf-icerik {
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+.itiraf-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #888;
+    flex-wrap: wrap;
+}
+
+.itiraf-meta .nick { font-weight: 700; color: #333; }
+.itiraf-meta .kategori-badge {
+    background: #e8f4fd;
+    color: #1a6eb5;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.yorum-sayi {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: #888;
+}
+
+.yorum-sayi::before { content: '💬'; font-size: 12px; }
+
+/* ========================
+   PAGİNATION
+======================== */
+.pagination {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.pagination a, .pagination span {
+    padding: 8px 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    font-size: 13px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.pagination .active { background: #1a2b4a; color: #fff; border-color: #1a2b4a; }
+.pagination a:hover { background: #f0f0f0; }
+
+/* ========================
+   SIDEBAR
+======================== */
+.sidebar-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.sidebar-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #1a2b4a;
+    border-bottom: 2px solid #1a2b4a;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+/* ARAMA */
+.arama-form {
+    display: flex;
+    gap: 5px;
+}
+
+.arama-form input {
+    flex: 1;
+    padding: 9px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.arama-form button, .btn {
+    padding: 9px 14px;
+    background: #1a2b4a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.btn-red { background: #e74c3c; }
+.btn-red:hover { background: #c0392b; }
+.btn:hover { opacity: 0.9; }
+
+/* POPÜLER */
+.populer-liste { list-style: none; }
+
+.populer-liste li {
+    padding: 7px 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.populer-liste li:last-child { border-bottom: none; }
+
+.populer-liste a {
+    color: #1a6eb5;
+    text-decoration: none;
+    font-size: 13px;
+    flex: 1;
+    line-height: 1.3;
+}
+
+.populer-liste a:hover { text-decoration: underline; }
+
+.populer-yorum-sayi {
+    font-size: 11px;
+    color: #aaa;
+    white-space: nowrap;
+    margin-left: 5px;
+}
+
+/* YENİ YORUMLAR */
+.yorum-item {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+}
+
+.yorum-item:last-child { border-bottom: none; }
+
+.yorum-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    font-weight: 700;
+    color: #fff;
+}
+
+.yorum-content { flex: 1; min-width: 0; }
+.yorum-nick { font-weight: 600; font-size: 12px; color: #333; }
+
+.yorum-itiraf-link {
+    color: #1a6eb5;
+    text-decoration: none;
+    font-size: 11px;
+}
+
+.yorum-text {
+    font-size: 12px;
+    color: #666;
+    margin-top: 2px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.yorum-tarih { font-size: 10px; color: #aaa; }
+
+/* İTİRAF ET FORMU */
+.itiraf-form-sidebar input,
+.itiraf-form-sidebar textarea,
+.itiraf-form-sidebar select {
+    width: 100%;
+    padding: 9px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-family: inherit;
+    -webkit-appearance: none;
+}
+
+.itiraf-form-sidebar textarea {
+    height: 90px;
+    resize: vertical;
+}
+
+.itiraf-form-sidebar .btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+}
+
+/* ========================
+   DETAY SAYFASI
+======================== */
+.detay-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 15px;
+}
+
+.detay-baslik {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a2b4a;
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.detay-icerik {
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 15px;
+    font-size: 15px;
+}
+
+/* REAKSİYONLAR */
+.reaksiyonlar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+.reaksiyon-btn {
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 7px 14px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.reaksiyon-btn:hover { background: #e8f4fd; border-color: #2980b9; }
+.reaksiyon-btn.aktif { background: #e8f4fd; border-color: #2980b9; }
+.reaksiyon-sayi { font-size: 13px; font-weight: 600; color: #555; }
+
+/* YORUMLAR */
+.yorumlar-baslik {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a2b4a;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #1a2b4a;
+}
+
+.yorum-detay {
+    background: #f9f9f9;
+    border-left: 3px solid #1a2b4a;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 0 6px 6px 0;
+}
+
+.yorum-detay-nick {
+    font-weight: 600;
+    font-size: 13px;
+    color: #1a2b4a;
+}
+
+.yorum-detay-tarih { font-size: 11px; color: #aaa; margin-left: 8px; }
+
+.yorum-detay-text {
+    margin-top: 5px;
+    color: #444;
+    line-height: 1.5;
+}
+
+/* YORUM FORMU */
+.yorum-form { margin-top: 20px; }
+
+.yorum-form input, .yorum-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-family: inherit;
+    -webkit-appearance: none;
+}
+
+.yorum-form textarea { height: 100px; resize: vertical; }
+
+/* ========================
+   ADMİN
+======================== */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.admin-table th, .admin-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.admin-table th { background: #1a2b4a; color: #fff; }
+.admin-table tr:nth-child(even) { background: #f9f9f9; }
+
+.badge { padding: 3px 8px; border-radius: 10px; font-size: 11px; }
+.badge-green { background: #d4edda; color: #155724; }
+.badge-red { background: #f8d7da; color: #721c24; }
+
+
+/* ========================
+   FLOATING BUTON (MOBİL)
+======================== */
+.float-itiraf-btn {
+    display: none;
+    position: fixed;
+    bottom: 70px;
+    right: 15px;
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(231,76,60,0.4);
+    z-index: 997;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ========================
+   FOOTER
+======================== */
+footer {
+    background: #1a2b4a;
+    color: #bbb;
+    margin-top: 40px;
+    font-size: 13px;
+}
+
+footer a { color: #90b8e8; }
+
+.footer-inner {
+    display: flex;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 20px 28px;
+}
+
+.footer-col {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.7;
+}
+
+.footer-col-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+    padding: 14px 20px;
+    font-size: 12px;
+    color: #888;
+}
+
+@media (max-width: 700px) {
+    .footer-inner {
+        flex-direction: column;
+        gap: 24px;
+        padding: 28px 16px 20px;
+    }
+}
+
+/* ARA SAYFASI */
+.ara-baslik {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a2b4a;
+    margin-bottom: 15px;
+}
+
+.bos-sonuc {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+    font-size: 16px;
+}
+
+/* ========================
+   TABLET (max 900px)
+======================== */
+@media (max-width: 900px) {
+    .container {
+        grid-template-columns: 1fr;
+        margin: 10px auto;
+    }
+
+    nav#desktopNav { display: none; }
+    .hamburger { display: flex; }
+    .float-itiraf-btn { display: flex; align-items: center; gap: 8px; }
+
+    .logo-main { font-size: 18px; }
+    .logo-sub { display: none; }
+
+    /* Mobilde sidebar sırasını değiştir: form üste gelsin */
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main-col { order: 1; }
+    .sidebar-form-col { order: 2; }
+    .sidebar-col { order: 3; }
+}
+
+/* ========================
+   KÜÇÜK MOBİL (max 480px)
+======================== */
+@media (max-width: 480px) {
+    .header-inner { padding: 18px 12px; }
+    .duyuru { font-size: 11px; padding: 6px 10px; }
+    .container { padding: 0 8px; margin: 8px auto; }
+
+    .itiraf-card { padding: 12px; border-radius: 8px; }
+    .itiraf-baslik { font-size: 14px; }
+    .itiraf-icerik { font-size: 12px; -webkit-line-clamp: 2; }
+    .itiraf-meta { font-size: 11px; gap: 6px; }
+
+    .tab-btn { padding: 8px 12px; font-size: 11px; }
+
+    .sidebar-card { padding: 12px; }
+    .sidebar-title { font-size: 11px; }
+
+    .detay-baslik { font-size: 17px; }
+    .detay-icerik { font-size: 14px; }
+
+    .reaksiyon-btn { padding: 8px 12px; font-size: 16px; }
+
+    .pagination a, .pagination span { padding: 8px 10px; font-size: 12px; }
+
+    .float-itiraf-btn { bottom: 65px; right: 12px; padding: 12px 16px; font-size: 13px; }
+}
