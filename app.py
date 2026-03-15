@@ -496,6 +496,10 @@ def deploy_hook(token):
             cwd=_os.path.dirname(__file__),
             stderr=_subprocess.STDOUT
         ).decode()
+        # PythonAnywhere WSGI reload
+        wsgi_file = '/var/www/medipolitirafediyor_pythonanywhere_com_wsgi.py'
+        if _os.path.exists(wsgi_file):
+            _os.utime(wsgi_file, None)
         return f'OK\n{result}', 200
     except Exception as e:
         return f'Hata: {e}', 500
