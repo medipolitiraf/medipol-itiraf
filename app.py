@@ -211,7 +211,8 @@ def itiraf_detay(id):
         yorumlar=yorumlar,
         reaksiyonlar=reaksiyonlar,
         populer=populer,
-        yeni_yorumlar=yeni_yorumlar
+        yeni_yorumlar=yeni_yorumlar,
+        kategori_etiketler=KATEGORI_ETIKETLER
     )
 
 @app.route('/itiraf-et', methods=['GET', 'POST'])

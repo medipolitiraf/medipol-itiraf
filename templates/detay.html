@@ -10,17 +10,11 @@
         <div class="detay-card">
             <h1 class="detay-baslik">{{ itiraf.baslik }}</h1>
             <div class="itiraf-meta" style="margin-bottom:15px;">
-                <span class="nick">Nick: {{ itiraf.nick }}</span>
+                <span class="nick-label">Nick:</span> <span class="nick">{{ itiraf.nick }}</span>
                 <span>|</span>
                 <span>{{ itiraf.tarih[:16] }}</span>
                 <span>|</span>
-                <span class="kategori-badge">
-                    {% if itiraf.kategori == 'itiraf' %}İtiraf
-                    {% elif itiraf.kategori == 'ilan' %}İlan
-                    {% elif itiraf.kategori == 'kayip' %}Kayıp Eşya
-                    {% elif itiraf.kategori == 'soru' %}Soru-Cevap
-                    {% endif %}
-                </span>
+                <span class="kategori-badge">{{ kategori_etiketler.get(itiraf.kategori, itiraf.kategori) }}</span>
             </div>
 
             <p class="detay-icerik">{{ itiraf.icerik }}</p>
