@@ -152,6 +152,7 @@ def index():
         SELECT y.nick, y.yorum, y.tarih, i.baslik, i.id as itiraf_id
         FROM yorumlar y
         JOIN itiraflar i ON i.id = y.itiraf_id
+        WHERE y.onaylandi = 1
         ORDER BY y.tarih DESC
         LIMIT 8
     """).fetchall()
@@ -199,6 +200,7 @@ def itiraf_detay(id):
         SELECT y.nick, y.yorum, y.tarih, i.baslik, i.id as itiraf_id
         FROM yorumlar y
         JOIN itiraflar i ON i.id = y.itiraf_id
+        WHERE y.onaylandi = 1
         ORDER BY y.tarih DESC
         LIMIT 8
     """).fetchall()
@@ -341,6 +343,7 @@ def ara():
         SELECT y.nick, y.yorum, y.tarih, i.baslik, i.id as itiraf_id
         FROM yorumlar y
         JOIN itiraflar i ON i.id = y.itiraf_id
+        WHERE y.onaylandi = 1
         ORDER BY y.tarih DESC
         LIMIT 8
     """).fetchall()

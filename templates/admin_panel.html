@@ -49,52 +49,61 @@
            MOBİL RESPONSIVE
         ======================== */
         @media (max-width: 768px) {
-            /* Stats grid: 2 sütun */
             .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
             .stat-card { min-width:0; padding:10px 12px; }
             .stat-sayi { font-size:22px; }
-
-            /* Filtre ve toplu bar: dikey */
-            .filtre-bar { flex-wrap:wrap; gap:6px; }
-            .filtre-btn { font-size:12px; padding:7px 12px; }
-            .toplu-bar { flex-wrap:wrap; gap:6px; }
+            .filtre-bar, .toplu-bar { flex-wrap:wrap; gap:6px; }
+            .filtre-btn { font-size:11px; padding:6px 11px; }
             .toplu-onayla-btn { font-size:13px; padding:9px 14px; }
-
-            /* Tablo: kart modu */
-            .admin-table { font-size:13px; }
-            .admin-table thead { display:none; }
-            .admin-table, .admin-table tbody, .admin-table tr, .admin-table td { display:block; width:100%; }
-            .admin-table tr {
-                background:#fff;
-                border:1px solid #ddd;
-                border-radius:8px;
-                margin-bottom:10px;
-                padding:4px 0;
-                overflow:hidden;
-            }
-            .admin-table tr[style*="background:#fff8f0"] { background:#fff8f0 !important; border-left:3px solid #f39c12; }
-            .admin-table td {
-                padding:8px 12px;
-                border:none;
-                border-bottom:1px solid #f5f5f5;
-                text-align:left;
-            }
-            .admin-table td:last-child { border-bottom:none; }
-            .admin-table td[style*="display:flex"] { display:flex !important; flex-wrap:wrap; gap:6px; }
-
-            /* İçerik preview satırı */
-            .icerik-row.open { display:block !important; }
-            .icerik-row td { background:#f8f9fa; }
-
-            /* Yorum tablosu da kart modu */
-            .sidebar-card { overflow:visible; }
-
-            /* Buton boyutları büyüt */
-            .btn-onizle, .btn-sabitle { font-size:13px; padding:8px 12px; }
-
-            /* Admin-tabs: kaydır */
             .admin-tabs { overflow-x:auto; flex-wrap:nowrap; padding-bottom:4px; }
             .admin-tab { white-space:nowrap; }
+
+            /* Ortak tablo → kart */
+            .admin-table thead { display:none; }
+            .admin-table, .admin-table tbody { display:block; }
+            .admin-table tr {
+                display:block;
+                background:#fff;
+                border:1px solid #e0e0e0;
+                border-radius:8px;
+                margin-bottom:8px;
+                padding:11px 13px;
+                position:relative;
+            }
+            .admin-table tr[style*="background:#fff8f0"] { background:#fff8f0 !important; border-left:3px solid #f39c12; }
+            .admin-table td { display:none; border:none; padding:0; }
+
+            /* İTİRAF TABLOSU: checkbox | id | baslik | nick | kat | tarih | durum | islem */
+            .itiraf-tablosu td:nth-child(1) { display:block; position:absolute; top:11px; right:11px; width:auto; }
+            .itiraf-tablosu td:nth-child(2) { display:inline; font-size:10px; color:#bbb; }
+            .itiraf-tablosu td:nth-child(3) { display:block; font-size:14px; font-weight:700; padding:3px 24px 5px 0; }
+            .itiraf-tablosu td:nth-child(4),
+            .itiraf-tablosu td:nth-child(5),
+            .itiraf-tablosu td:nth-child(6),
+            .itiraf-tablosu td:nth-child(7) { display:inline; font-size:11px; color:#777; }
+            .itiraf-tablosu td:nth-child(4)::after,
+            .itiraf-tablosu td:nth-child(5)::after,
+            .itiraf-tablosu td:nth-child(6)::after { content:' · '; color:#ccc; }
+            .itiraf-tablosu td:nth-child(8) { display:flex !important; flex-wrap:wrap; gap:5px; padding-top:8px; }
+
+            /* İçerik satırı */
+            .icerik-row { display:none !important; }
+            .icerik-row.open { display:block !important; }
+            .icerik-row.open td { display:block !important; padding:10px 13px !important; background:#f8f9fa; font-size:13px; line-height:1.6; white-space:pre-wrap; word-break:break-word; }
+
+            /* YORUM TABLOSU: id | yorum | nick | itiraf | tarih | durum | islem */
+            .yorum-tablosu td:nth-child(1) { display:inline; font-size:10px; color:#bbb; }
+            .yorum-tablosu td:nth-child(2) { display:block; font-size:13px; font-weight:600; padding:3px 0 5px; }
+            .yorum-tablosu td:nth-child(3),
+            .yorum-tablosu td:nth-child(4),
+            .yorum-tablosu td:nth-child(5),
+            .yorum-tablosu td:nth-child(6) { display:inline; font-size:11px; color:#777; }
+            .yorum-tablosu td:nth-child(3)::after,
+            .yorum-tablosu td:nth-child(4)::after,
+            .yorum-tablosu td:nth-child(5)::after { content:' · '; color:#ccc; }
+            .yorum-tablosu td:nth-child(7) { display:flex !important; flex-wrap:wrap; gap:5px; padding-top:8px; }
+
+            .btn-onizle, .btn-sabitle { font-size:12px; padding:7px 11px; }
         }
 
         @media (max-width: 480px) {
@@ -183,7 +192,7 @@
         </div>
 
     <div class="sidebar-card" style="padding:0; overflow:hidden;">
-        <table class="admin-table">
+        <table class="admin-table itiraf-tablosu">
             <thead>
                 <tr>
                     <th style="width:30px;"></th>
@@ -247,7 +256,7 @@
     <!-- YORUMLAR SEKMESİ -->
     {% elif sekme == 'yorumlar' %}
     <div class="sidebar-card" style="padding:0; overflow:hidden;">
-        <table class="admin-table">
+        <table class="admin-table yorum-tablosu">
             <thead>
                 <tr>
                     <th>#</th>
