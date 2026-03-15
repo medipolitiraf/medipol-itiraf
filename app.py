@@ -11,11 +11,11 @@ from email.mime.multipart import MIMEMultipart
 app = Flask(__name__)
 app.secret_key = 'medipol-itiraf-secret-2024'
 
-ITIRAF_KATEGORILER = ['itiraf', 'ask', 'overheard', 'komik', 'okul', 'pismanlik', 'protesto', 'diger']
+ITIRAF_KATEGORILER = ['itiraf', 'ask', 'overheard', 'komik', 'okul', 'pismanlik', 'protesto', 'fikir', 'diger']
 KATEGORI_ETIKETLER = {
     'itiraf': 'İtiraf', 'ask': 'Aşk', 'overheard': 'Overheard',
     'komik': 'Komik', 'okul': 'Okul', 'pismanlik': 'Pişmanlık',
-    'protesto': 'Protesto', 'diger': 'Diğer',
+    'protesto': 'Protesto', 'fikir': 'Fikir Verin', 'diger': 'Diğer',
     'ilan': 'İlan', 'soru': 'Soru-Cevap', 'kayip': 'Kayıp Eşya'
 }
 
