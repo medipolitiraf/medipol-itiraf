@@ -362,7 +362,7 @@ nav a.itiraf-btn:hover { background: #c0392b; }
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 16px;
+    padding: 16px 20px;
     margin-bottom: 10px;
     transition: box-shadow 0.2s;
     cursor: pointer;
@@ -385,7 +385,7 @@ nav a.itiraf-btn:hover { background: #c0392b; }
 }
 
 .itiraf-baslik {
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
     color: #1a6eb5;
     text-decoration: none;
@@ -413,7 +413,7 @@ nav a.itiraf-btn:hover { background: #c0392b; }
     align-items: center;
     gap: 6px;
     font-size: 13px;
-    color: #888;
+    color: #666;
     flex-wrap: wrap;
 }
 
