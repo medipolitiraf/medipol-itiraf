@@ -385,14 +385,15 @@ nav a.itiraf-btn:hover { background: #c0392b; }
 }
 
 .itiraf-baslik {
-    font-size: 18px;
-    font-weight: 700;
-    color: #1a6eb5;
+    font-size: 19px;
+    font-weight: 800;
+    color: #1558a0;
     text-decoration: none;
     display: block;
-    margin-bottom: 8px;
-    line-height: 1.4;
+    margin-bottom: 10px;
+    line-height: 1.35;
     text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 .itiraf-baslik:hover { text-decoration: underline; }
@@ -417,7 +418,8 @@ nav a.itiraf-btn:hover { background: #c0392b; }
     flex-wrap: wrap;
 }
 
-.itiraf-meta .nick { font-weight: 700; color: #333; }
+.itiraf-meta .nick-label { font-weight: 400; color: #aaa; font-size: 12px; }
+.itiraf-meta .nick { font-weight: 700; color: #222; }
 .itiraf-meta .kategori-badge {
     background: #e8f4fd;
     color: #1a6eb5;
