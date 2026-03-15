@@ -874,10 +874,10 @@ footer a { color: #90b8e8; }
     .duyuru { font-size: 11px; padding: 6px 10px; }
     .container { padding: 0 8px; margin: 8px auto; }
 
-    .itiraf-card { padding: 16px 16px 16px 20px; border-radius: 8px; }
-    .itiraf-baslik { font-size: 14px; }
+    .itiraf-card { padding: 14px 14px 14px 18px; border-radius: 8px; }
+    .itiraf-baslik { font-size: 14px; margin-bottom: 5px; }
     .itiraf-icerik { font-size: 12px; -webkit-line-clamp: 2; }
-    .itiraf-meta { font-size: 11px; gap: 6px; }
+    .itiraf-meta { font-size: 11px; gap: 4px; }
 
     .tab-btn { padding: 8px 12px; font-size: 11px; }
 
