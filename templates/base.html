@@ -85,8 +85,7 @@
 
 <!-- DUYURU BANDI -->
 <div class="duyuru">
-    <span>📢 Tüm itiraflar anonimdir. Saygılı olun.</span>
-    <a href="https://instagram.com/imedipol" target="_blank" class="duyuru-instagram">📸 @imedipol — Instagram'da Takip Et</a>
+    📢 Tüm itiraflar anonimdir. Saygılı olun.
 </div>
 
 {% block content %}{% endblock %}
@@ -118,6 +117,12 @@
         © 2025 Medipol İtiraf Ediyor &bull; Tüm itiraflar anonimdir &bull; <a href="/admin" style="color:#90b8e8;">Admin</a>
     </div>
 </footer>
+
+<!-- Instagram Takip Bandı (YTÜ tarzı) -->
+<div class="instagram-bar" id="instagramBar">
+    <span>Instagram'da takip et: <a href="https://instagram.com/imedipol" target="_blank">@imedipol</a></span>
+    <button class="instagram-bar-close" id="instagramBarClose">&#x2715;</button>
+</div>
 
 <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 <script>
@@ -166,6 +171,17 @@
         });
         document.addEventListener('click', () => {
             navDropContent.classList.remove('open');
+        });
+    }
+
+    // Instagram bar dismiss
+    const igBar = document.getElementById('instagramBar');
+    const igClose = document.getElementById('instagramBarClose');
+    if (igBar && igClose) {
+        if (localStorage.getItem('igBarClosed')) igBar.style.display = 'none';
+        igClose.addEventListener('click', () => {
+            igBar.style.display = 'none';
+            localStorage.setItem('igBarClosed', '1');
         });
     }
 </script>
