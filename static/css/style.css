@@ -54,29 +54,33 @@ header {
 /* Desktop nav */
 nav {
     display: flex;
-    gap: 5px;
+    gap: 4px;
+    align-items: center;
 }
 
 nav a {
-    color: #ccc;
+    color: #ddd;
     text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
     transition: all 0.2s;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 nav a:hover, nav a.active {
     color: #fff;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.12);
 }
 
 nav a.itiraf-btn {
     background: #e74c3c;
     color: #fff;
+    padding: 9px 20px;
+    border-radius: 6px;
 }
 
 nav a.itiraf-btn:hover { background: #c0392b; }
@@ -85,19 +89,20 @@ nav a.itiraf-btn:hover { background: #c0392b; }
 .nav-dropdown { position: relative; }
 
 .nav-drop-btn {
-    color: #ccc;
+    color: #ddd;
     background: none;
     border: none;
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    padding: 9px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s;
+    white-space: nowrap;
 }
-.nav-drop-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
+.nav-drop-btn:hover { color: #fff; background: rgba(255,255,255,0.12); }
 
 .nav-drop-content {
     display: none;
