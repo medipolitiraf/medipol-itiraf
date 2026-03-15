@@ -362,7 +362,7 @@ nav a.itiraf-btn:hover { background: #c0392b; }
     background: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    padding: 16px 20px;
+    padding: 20px 22px 20px 26px;
     margin-bottom: 10px;
     transition: box-shadow 0.2s;
     cursor: pointer;
@@ -874,7 +874,7 @@ footer a { color: #90b8e8; }
     .duyuru { font-size: 11px; padding: 6px 10px; }
     .container { padding: 0 8px; margin: 8px auto; }
 
-    .itiraf-card { padding: 12px; border-radius: 8px; }
+    .itiraf-card { padding: 16px 16px 16px 20px; border-radius: 8px; }
     .itiraf-baslik { font-size: 14px; }
     .itiraf-icerik { font-size: 12px; -webkit-line-clamp: 2; }
     .itiraf-meta { font-size: 11px; gap: 6px; }
