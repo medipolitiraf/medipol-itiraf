@@ -479,6 +479,24 @@ def admin_cikis():
     return redirect(url_for('index'))
 
 import os as _os
+import subprocess as _subprocess
+
+DEPLOY_TOKEN = 'medipol-deploy-2026'
+
+@app.route('/deploy/<token>')
+def deploy_hook(token):
+    if token != DEPLOY_TOKEN:
+        return 'Yetkisiz', 403
+    try:
+        result = _subprocess.check_output(
+            ['git', 'pull'],
+            cwd=_os.path.dirname(__file__),
+            stderr=_subprocess.STDOUT
+        ).decode()
+        return f'OK\n{result}', 200
+    except Exception as e:
+        return f'Hata: {e}', 500
+
 init_db()
 if __name__ == '__main__':
     port = int(_os.environ.get('PORT', 5000))
