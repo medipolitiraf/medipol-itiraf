@@ -44,6 +44,64 @@
 
         /* CHECKBOX */
         input[type="checkbox"] { width:16px; height:16px; cursor:pointer; }
+
+        /* ========================
+           MOBİL RESPONSIVE
+        ======================== */
+        @media (max-width: 768px) {
+            /* Stats grid: 2 sütun */
+            .stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+            .stat-card { min-width:0; padding:10px 12px; }
+            .stat-sayi { font-size:22px; }
+
+            /* Filtre ve toplu bar: dikey */
+            .filtre-bar { flex-wrap:wrap; gap:6px; }
+            .filtre-btn { font-size:12px; padding:7px 12px; }
+            .toplu-bar { flex-wrap:wrap; gap:6px; }
+            .toplu-onayla-btn { font-size:13px; padding:9px 14px; }
+
+            /* Tablo: kart modu */
+            .admin-table { font-size:13px; }
+            .admin-table thead { display:none; }
+            .admin-table, .admin-table tbody, .admin-table tr, .admin-table td { display:block; width:100%; }
+            .admin-table tr {
+                background:#fff;
+                border:1px solid #ddd;
+                border-radius:8px;
+                margin-bottom:10px;
+                padding:4px 0;
+                overflow:hidden;
+            }
+            .admin-table tr[style*="background:#fff8f0"] { background:#fff8f0 !important; border-left:3px solid #f39c12; }
+            .admin-table td {
+                padding:8px 12px;
+                border:none;
+                border-bottom:1px solid #f5f5f5;
+                text-align:left;
+            }
+            .admin-table td:last-child { border-bottom:none; }
+            .admin-table td[style*="display:flex"] { display:flex !important; flex-wrap:wrap; gap:6px; }
+
+            /* İçerik preview satırı */
+            .icerik-row.open { display:block !important; }
+            .icerik-row td { background:#f8f9fa; }
+
+            /* Yorum tablosu da kart modu */
+            .sidebar-card { overflow:visible; }
+
+            /* Buton boyutları büyüt */
+            .btn-onizle, .btn-sabitle { font-size:13px; padding:8px 12px; }
+
+            /* Admin-tabs: kaydır */
+            .admin-tabs { overflow-x:auto; flex-wrap:nowrap; padding-bottom:4px; }
+            .admin-tab { white-space:nowrap; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid { grid-template-columns:1fr 1fr; gap:6px; }
+            .stat-sayi { font-size:20px; }
+            .stat-label { font-size:10px; }
+        }
     </style>
 </head>
 <body>

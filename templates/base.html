@@ -85,7 +85,8 @@
 
 <!-- DUYURU BANDI -->
 <div class="duyuru">
-    📢 Tüm itiraflar anonimdir. Saygılı olun. | Instagram: <strong>@imedipol</strong>
+    <span>📢 Tüm itiraflar anonimdir. Saygılı olun.</span>
+    <a href="https://instagram.com/imedipol" target="_blank" class="duyuru-instagram">📸 @imedipol — Instagram'da Takip Et</a>
 </div>
 
 {% block content %}{% endblock %}
@@ -151,6 +152,22 @@
         const isOpen = dropKategoriContent.classList.toggle('open');
         dropKategoriBtn.classList.toggle('acc-open', isOpen);
     });
+
+    // Desktop Kategoriler dropdown — click toggle (hover fixes kapanma sorunu)
+    const navDropBtn = document.querySelector('.nav-drop-btn');
+    const navDropContent = document.querySelector('.nav-drop-content');
+    if (navDropBtn && navDropContent) {
+        navDropBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navDropContent.classList.toggle('open');
+        });
+        navDropContent.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        document.addEventListener('click', () => {
+            navDropContent.classList.remove('open');
+        });
+    }
 </script>
 </body>
 </html>

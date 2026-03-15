@@ -117,7 +117,7 @@ nav a.itiraf-btn:hover { background: #c0392b; }
     padding: 6px 0;
     overflow: hidden;
 }
-.nav-dropdown:hover .nav-drop-content { display: block; }
+.nav-drop-content.open { display: block; }
 
 .nav-drop-content a {
     display: block;
@@ -263,10 +263,28 @@ nav a.itiraf-btn:hover { background: #c0392b; }
     background: #2980b9;
     color: #fff;
     text-align: center;
-    padding: 7px 15px;
+    padding: 7px 15px 9px;
     font-size: 12px;
-    line-height: 1.4;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
 }
+
+.duyuru-instagram {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    background: linear-gradient(90deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: opacity 0.2s;
+}
+.duyuru-instagram:hover { opacity: 0.8; }
 
 /* ========================
    ANA LAYOUT
@@ -554,6 +572,27 @@ nav a.itiraf-btn:hover { background: #c0392b; }
 }
 
 .yorum-tarih { font-size: 10px; color: #aaa; }
+
+/* SİDEBAR İTİRAF ET CTA BUTONU */
+.sidebar-itiraf-cta {
+    display: block;
+    background: #e74c3c;
+    color: #fff;
+    text-align: center;
+    padding: 18px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 800;
+    text-decoration: none;
+    margin-bottom: 15px;
+    transition: background 0.2s, transform 0.15s;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 12px rgba(231,76,60,0.3);
+}
+.sidebar-itiraf-cta:hover {
+    background: #c0392b;
+    transform: translateY(-1px);
+}
 
 /* İTİRAF ET FORMU */
 .itiraf-form-sidebar input,

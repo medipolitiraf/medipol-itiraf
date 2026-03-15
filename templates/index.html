@@ -115,35 +115,9 @@
         </div>
     </div>
 
-    <!-- SAĞ: İTİRAF ET FORMU -->
-    <div class="sidebar-col" id="itiraf-et-form">
-        <div class="sidebar-card">
-            <div class="sidebar-title">→ Sen de İtiraf Et</div>
-            <form class="itiraf-form-sidebar" method="POST" action="/itiraf-et">
-                <input type="text" name="baslik" placeholder="Başlık (zorunlu)" required maxlength="200">
-                <input type="text" name="nick" placeholder='Nick (boş = "Anonim")' maxlength="50">
-                <select name="kategori">
-                    <optgroup label="— İtiraf">
-                        <option value="ask">Aşk</option>
-                        <option value="aile">Aile</option>
-                        <option value="fikir">Fikir Verin</option>
-                        <option value="komik">Komik</option>
-                        <option value="okul">Okul</option>
-                        <option value="pismanlik">Pişmanlık</option>
-                        <option value="protesto">Protesto</option>
-                        <option value="diger">Diğer</option>
-                    </optgroup>
-                    <optgroup label="— Diğer">
-                        <option value="ilan">İlan</option>
-                        <option value="kayip">Kayıp Eşya</option>
-                        <option value="soru">Soru-Cevap</option>
-                    </optgroup>
-                </select>
-                <textarea name="icerik" placeholder="İtirafını yaz... (anonim)" required maxlength="2000"></textarea>
-                <button type="submit" class="btn btn-red">İtiraf Et 🤫</button>
-            </form>
-            <p style="font-size:11px; color:#aaa; margin-top:8px; text-align:center;">Tüm itiraflar anonimdir.</p>
-        </div>
+    <!-- SAĞ: İTİRAF ET + KATEGORİLER -->
+    <div class="sidebar-col">
+        <a href="/itiraf-et" class="sidebar-itiraf-cta">🤫 Sen de İtiraf Et</a>
 
         <!-- KATEGORİLER -->
         <div class="sidebar-card">
