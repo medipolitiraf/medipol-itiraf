@@ -52,10 +52,10 @@
 
         {% if itiraflar %}
             {% for itiraf in itiraflar %}
-            <div class="itiraf-card {% if itiraf.sabitlendi %}itiraf-sabitli{% endif %}">
+            <div class="itiraf-card {% if itiraf.sabitlendi %}itiraf-sabitli{% endif %}" onclick="toggleKart({{ itiraf.id }})">
                 {% if itiraf.sabitlendi %}<span class="sabit-rozet-kart">📌 Sabitlendi</span>{% endif %}
-                <a href="/itiraf/{{ itiraf.id }}" class="itiraf-baslik">{{ itiraf.baslik }}</a>
-                <span class="kart-toggle" onclick="toggleKart({{ itiraf.id }})" id="ikon-{{ itiraf.id }}">▼</span>
+                <a href="/itiraf/{{ itiraf.id }}" class="itiraf-baslik" onclick="event.stopPropagation()">{{ itiraf.baslik }}</a>
+                <span class="kart-toggle" id="ikon-{{ itiraf.id }}">▼</span>
                 <div class="kart-onizleme" id="onizleme-{{ itiraf.id }}" style="display:none;">
                     {{ itiraf.icerik[:300] }}{% if itiraf.icerik|length > 300 %}...{% endif %}
                     <br><a href="/itiraf/{{ itiraf.id }}" class="devamini-oku-link">Devamını oku →</a>
