@@ -490,6 +490,20 @@ def admin_toplu_onayla():
         conn.close()
     return redirect(url_for('admin_panel'))
 
+@app.route('/admin/toplu-sil', methods=['POST'])
+def admin_toplu_sil():
+    if not session.get('admin'):
+        return redirect(url_for('admin_login'))
+    ids = request.form.getlist('secili_ids')
+    if ids:
+        conn = get_db()
+        for itiraf_id in ids:
+            conn.execute("DELETE FROM itiraflar WHERE id = ?", (itiraf_id,))
+            conn.execute("DELETE FROM yorumlar WHERE itiraf_id = ?", (itiraf_id,))
+        conn.commit()
+        conn.close()
+    return redirect(url_for('admin_panel'))
+
 @app.route('/admin/yorum-onayla/<int:id>')
 def admin_yorum_onayla(id):
     if not session.get('admin'):

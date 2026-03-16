@@ -223,14 +223,16 @@
         <a href="/admin/panel?sekme=itiraflar&filtre=sabitli" class="filtre-btn {{ 'active' if filtre == 'sabitli' }}">📌 Sabitliler</a>
     </div>
 
-    <!-- TOPLU ONAY FORMU -->
+    <!-- TOPLU İŞLEM FORMU -->
     <form method="POST" action="/admin/toplu-onayla" id="topluForm">
+        <input type="hidden" name="_islem" id="topluIslem" value="onayla">
         <div class="toplu-bar">
-            <button type="submit" class="toplu-onayla-btn" onclick="return onayliMi()">✅ Seçilenleri Onayla</button>
-            <label style="font-size:12px; color:#555; cursor:pointer;">
+            <label style="font-size:12px; color:#555; cursor:pointer; display:flex; align-items:center; gap:5px;">
                 <input type="checkbox" id="tumunuSec" onchange="tumunuSec(this)"> Tümünü Seç
             </label>
             <span class="secim-bilgi" id="secimBilgi">0 seçili</span>
+            <button type="button" class="toplu-onayla-btn" onclick="topluGonder('onayla')">✅ Yayınla</button>
+            <button type="button" class="toplu-onayla-btn" style="background:#e74c3c;" onclick="topluGonder('sil')">🗑 Sil</button>
         </div>
 
     <div class="sidebar-card" style="padding:0; overflow:hidden;">
@@ -251,9 +253,7 @@
                 {% for itiraf in itiraflar %}
                 <tr style="{% if not itiraf.onaylandi %}background:#fff8f0;{% endif %}">
                     <td>
-                        {% if not itiraf.onaylandi %}
                         <input type="checkbox" name="secili_ids" value="{{ itiraf.id }}" class="secim-cb" onchange="secimGuncelle()">
-                        {% endif %}
                     </td>
                     <td>{{ itiraf.id }}</td>
                     <td>
@@ -361,16 +361,23 @@ function tumunuSec(cb) {
 }
 
 function secimGuncelle() {
+    const tumCb = document.querySelectorAll('.secim-cb');
     const secili = document.querySelectorAll('.secim-cb:checked').length;
     document.getElementById('secimBilgi').textContent = secili + ' seçili';
-    document.getElementById('tumunuSec').checked =
-        secili === document.querySelectorAll('.secim-cb').length && secili > 0;
+    document.getElementById('tumunuSec').checked = secili === tumCb.length && secili > 0;
+    document.getElementById('tumunuSec').indeterminate = secili > 0 && secili < tumCb.length;
 }
 
-function onayliMi() {
+function topluGonder(islem) {
     const secili = document.querySelectorAll('.secim-cb:checked').length;
-    if (secili === 0) { alert('Lütfen en az bir itiraf seçin.'); return false; }
-    return confirm(secili + ' itirafı onaylamak istiyor musunuz?');
+    if (secili === 0) { alert('Lütfen en az bir itiraf seçin.'); return; }
+    const mesaj = islem === 'sil'
+        ? secili + ' itirafı kalıcı olarak silmek istediğinizden emin misiniz?'
+        : secili + ' itirafı yayınlamak istiyor musunuz?';
+    if (!confirm(mesaj)) return;
+    const form = document.getElementById('topluForm');
+    form.action = islem === 'sil' ? '/admin/toplu-sil' : '/admin/toplu-onayla';
+    form.submit();
 }
 </script>
 </body>
