@@ -58,7 +58,11 @@
                 <span class="kart-toggle" id="ikon-{{ itiraf.id }}">▼</span>
                 <div class="kart-onizleme" id="onizleme-{{ itiraf.id }}" style="display:none;">
                     {{ itiraf.icerik[:300] }}{% if itiraf.icerik|length > 300 %}...{% endif %}
-                    <br><a href="/itiraf/{{ itiraf.id }}" class="devamini-oku-link">Devamını oku →</a>
+                    <br>
+                    <div class="onizleme-aksiyonlar" onclick="event.stopPropagation()">
+                        <a href="/itiraf/{{ itiraf.id }}" class="devamini-oku-link">Devamını oku →</a>
+                        <a href="/itiraf/{{ itiraf.id }}#yorum-form" class="yorum-yaz-link">💬 Yorum Yaz</a>
+                    </div>
                 </div>
                 <div class="itiraf-meta">
                     <span class="nick-label">Nick:</span> <span class="nick">{{ itiraf.nick }}</span>
