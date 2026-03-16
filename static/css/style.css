@@ -929,6 +929,18 @@ footer a { color: #90b8e8; }
 
     .tab-btn { padding: 8px 12px; font-size: 11px; }
 
+    /* Kategoriler butonu mobilde ayrı satırda tam genişlik */
+    .tabs {
+        flex-wrap: wrap;
+        overflow-x: visible;
+        white-space: normal;
+    }
+    .kateg-tab-btn {
+        width: 100%;
+        text-align: center;
+        margin-top: 4px;
+    }
+
     .sidebar-card { padding: 12px; }
     .sidebar-title { font-size: 11px; }
 
