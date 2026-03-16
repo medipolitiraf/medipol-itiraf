@@ -14,6 +14,7 @@
             <a href="/?kategori=kayip" class="tab-btn {{ 'active' if kategori == 'kayip' }}">Kayıp Eşya</a>
             <a href="/?kategori=soru" class="tab-btn {{ 'active' if kategori == 'soru' }}">Soru-Cevap</a>
             <button class="tab-btn kateg-tab-btn {{ 'active' if filtre }}" onclick="toggleKategoriPanel()" id="kategTabBtn">☰ Kategoriler</button>
+            <a href="#populer-bolum" class="tab-btn populer-tab-btn" onclick="smoothScrollToPopuler(event)">🔥 Popüler</a>
         </div>
 
         <!-- KATEGORİ PANEL -->
@@ -28,6 +29,11 @@
         function toggleKategoriPanel() {
             var panel = document.getElementById('kategPanel');
             panel.style.display = (panel.style.display === 'flex' || getComputedStyle(panel).display === 'flex') ? 'none' : 'flex';
+        }
+        function smoothScrollToPopuler(e) {
+            e.preventDefault();
+            var el = document.getElementById('populer-bolum');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
         </script>
 
@@ -93,8 +99,8 @@
         </div>
 
         <!-- POPÜLER İTİRAFLAR -->
-        <div class="sidebar-card">
-            <div class="sidebar-title">Popüler İtiraflar (Son 7 Gün)</div>
+        <div class="sidebar-card populer-kart" id="populer-bolum">
+            <div class="populer-baslik">🔥 Bu Haftanın En Çok Konuşulanları</div>
             {% if populer %}
             <ul class="populer-liste">
                 {% for p in populer %}

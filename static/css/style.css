@@ -365,6 +365,32 @@ nav a.itiraf-btn:hover { background: #0284c7; }
     font-family: inherit;
 }
 
+.populer-tab-btn {
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    color: #fff !important;
+    border-color: #ff6b35;
+    font-weight: 600;
+}
+
+.populer-tab-btn:hover {
+    background: linear-gradient(135deg, #e55a22, #e0820f);
+    color: #fff !important;
+}
+
+.populer-kart {
+    border-top: 3px solid #ff6b35;
+}
+
+.populer-baslik {
+    font-size: 13px;
+    font-weight: 700;
+    color: #1a2b4a;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f0;
+    letter-spacing: 0.2px;
+}
+
 .kateg-panel {
     display: none;
     flex-wrap: wrap;
