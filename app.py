@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session
+from werkzeug.middleware.proxy_fix import ProxyFix
 import sqlite3
 import os
 from datetime import datetime, timedelta
@@ -9,6 +10,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 app.secret_key = 'medipol-itiraf-secret-2024'
 
 ITIRAF_KATEGORILER = ['itiraf', 'ask', 'overheard', 'komik', 'okul', 'pismanlik', 'protesto', 'fikir', 'diger']
