@@ -17,7 +17,7 @@
         </div>
 
         <!-- KATEGORİ PANEL -->
-        <div class="kateg-panel" id="kategPanel" style="display:{{ 'flex' if filtre else 'none' }};">
+        <div class="kateg-panel" id="kategPanel" {% if filtre %}style="display:flex;"{% endif %}>
             <a href="/?kategori=itiraf" class="kateg-link {{ 'active' if not filtre }}">Hepsi</a>
             {% for k in itiraf_kategoriler %}
             <a href="/?kategori=itiraf&filtre={{ k }}" class="kateg-link {{ 'active' if filtre == k }}">{{ kategori_etiketler[k] }}</a>
@@ -27,7 +27,7 @@
         <script>
         function toggleKategoriPanel() {
             var panel = document.getElementById('kategPanel');
-            panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+            panel.style.display = (panel.style.display === 'flex' || getComputedStyle(panel).display === 'flex') ? 'none' : 'flex';
         }
         </script>
 

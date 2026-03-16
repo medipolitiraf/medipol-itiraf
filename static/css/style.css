@@ -366,30 +366,34 @@ nav a.itiraf-btn:hover { background: #0284c7; }
 }
 
 .kateg-panel {
+    display: none;
     flex-wrap: wrap;
-    gap: 6px 10px;
-    padding: 10px 12px;
-    margin-bottom: 14px;
-    background: #f0f5ff;
+    gap: 8px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+    background: #fff;
     border: 1px solid #d0ddf0;
-    border-radius: 8px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
 }
 
 .kateg-link {
-    color: #1a6eb5;
+    color: #1a2b4a;
     text-decoration: none;
     font-size: 13px;
-    padding: 3px 10px;
-    border-radius: 14px;
-    border: 1px solid transparent;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1.5px solid #d0ddf0;
+    background: #f5f8ff;
     transition: all 0.15s;
     white-space: nowrap;
 }
 
 .kateg-link:hover {
     background: #e0f2fe;
+    border-color: #0ea5e9;
     color: #0284c7;
-    border-color: #bae6fd;
 }
 
 .kateg-link.active {
