@@ -383,12 +383,13 @@ nav a.itiraf-btn:hover { background: #0284c7; }
 
 .populer-baslik {
     font-size: 13px;
-    font-weight: 700;
-    color: #1a2b4a;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #f0f0f0;
-    letter-spacing: 0.2px;
+    font-weight: 800;
+    color: #fff;
+    margin: -16px -16px 14px -16px;
+    padding: 11px 16px;
+    border-radius: 8px 8px 0 0;
+    background: linear-gradient(135deg, #ff6b35, #f7931e);
+    letter-spacing: 0.3px;
 }
 
 .kateg-panel {
