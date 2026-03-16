@@ -65,7 +65,12 @@
                     </div>
                 </div>
                 <div class="itiraf-meta">
-                    <span class="nick-label">Nick:</span> <span class="nick">{{ itiraf.nick }}</span>
+                    <span class="nick-label">Nick:</span>
+                    {% if itiraf.nick == '__ADMIN__' %}
+                        <span class="admin-nick-badge">👑 Admin</span>
+                    {% else %}
+                        <span class="nick">{{ itiraf.nick }}</span>
+                    {% endif %}
                     <span>|</span>
                     <span>{{ itiraf.tarih[:10] }}</span>
                     <span>|</span>

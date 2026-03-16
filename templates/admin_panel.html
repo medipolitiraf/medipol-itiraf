@@ -45,6 +45,17 @@
         /* CHECKBOX */
         input[type="checkbox"] { width:16px; height:16px; cursor:pointer; }
 
+        .admin-nick-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a2b4a, #0ea5e9);
+            color: #fff;
+            font-weight: 800;
+            font-size: 11px;
+            padding: 2px 9px;
+            border-radius: 50px;
+            box-shadow: 0 0 8px rgba(14,165,233,0.5);
+        }
+
         /* ========================
            MOBİL RESPONSIVE
         ======================== */
@@ -166,7 +177,38 @@
                 <span class="badge-bekleyen">{{ bekleyen_yorum }} bekliyor</span>
             {% endif %}
         </a>
+        <a href="/admin/panel?sekme=mesaj" class="admin-tab {{ 'active' if sekme == 'mesaj' }}" style="background: linear-gradient(135deg,#0ea5e9,#1a2b4a); color:#fff;">
+            ✍️ Mesaj At
+        </a>
     </div>
+
+    <!-- MESAJ AT SEKMESİ -->
+    {% if sekme == 'mesaj' %}
+    <div style="max-width:600px; background:#fff; border-radius:12px; padding:28px; box-shadow:0 2px 12px rgba(0,0,0,0.08); border-top:4px solid #0ea5e9;">
+        <div style="font-size:18px; font-weight:800; color:#1a2b4a; margin-bottom:6px;">✍️ Admin Mesajı Gönder</div>
+        <div style="font-size:13px; color:#888; margin-bottom:20px;">Bu mesaj sitede <span class="admin-nick-badge">👑 Admin</span> rozeti ile görünür.</div>
+        <form method="POST" action="/admin/mesaj-at">
+            <div style="margin-bottom:14px;">
+                <label style="font-size:12px; font-weight:700; color:#555; display:block; margin-bottom:5px;">BAŞLIK</label>
+                <input type="text" name="baslik" required placeholder="Mesaj başlığı..." style="width:100%; padding:10px 12px; border:1px solid #dde3ed; border-radius:8px; font-size:14px; box-sizing:border-box;">
+            </div>
+            <div style="margin-bottom:14px;">
+                <label style="font-size:12px; font-weight:700; color:#555; display:block; margin-bottom:5px;">İÇERİK</label>
+                <textarea name="icerik" required rows="5" placeholder="Mesaj içeriği..." style="width:100%; padding:10px 12px; border:1px solid #dde3ed; border-radius:8px; font-size:14px; resize:vertical; box-sizing:border-box;"></textarea>
+            </div>
+            <div style="margin-bottom:20px;">
+                <label style="font-size:12px; font-weight:700; color:#555; display:block; margin-bottom:5px;">KATEGORİ</label>
+                <select name="kategori" style="padding:9px 12px; border:1px solid #dde3ed; border-radius:8px; font-size:13px;">
+                    <option value="itiraf">İtiraf</option>
+                    <option value="ask">Aşk</option>
+                    <option value="komik">Komik</option>
+                    <option value="diger">Diğer</option>
+                </select>
+            </div>
+            <button type="submit" style="background:linear-gradient(135deg,#0ea5e9,#1a2b4a); color:#fff; border:none; border-radius:8px; padding:12px 28px; font-size:14px; font-weight:700; cursor:pointer;">🚀 Gönder</button>
+        </form>
+    </div>
+    {% endif %}
 
     <!-- İTİRAFLAR SEKMESİ -->
     {% if sekme == 'itiraflar' %}

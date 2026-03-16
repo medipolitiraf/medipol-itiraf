@@ -22,7 +22,7 @@ KATEGORI_ETIKETLER = {
 }
 
 DB_PATH = os.path.join(os.path.dirname(__file__), 'database.db')
-ADMIN_PASSWORD = hashlib.sha256('admin123'.encode()).hexdigest()
+ADMIN_PASSWORD = hashlib.sha256('burak6736'.encode()).hexdigest()
 
 # ── E-POSTA AYARLARI ──────────────────────────────
 EMAIL_GONDEREN  = 'burakadsiz96@gmail.com'   # gönderen gmail
@@ -459,6 +459,23 @@ def admin_sabitle(id):
     conn.commit()
     conn.close()
     return redirect(url_for('admin_panel'))
+
+@app.route('/admin/mesaj-at', methods=['POST'])
+def admin_mesaj_at():
+    if not session.get('admin'):
+        return redirect(url_for('admin_login'))
+    baslik = request.form.get('baslik', '').strip()
+    icerik = request.form.get('icerik', '').strip()
+    kategori = request.form.get('kategori', 'itiraf')
+    if baslik and icerik:
+        conn = get_db()
+        conn.execute(
+            "INSERT INTO itiraflar (baslik, icerik, nick, kategori, onaylandi, sabitlendi) VALUES (?, ?, ?, ?, 1, 0)",
+            (baslik, icerik, '__ADMIN__', kategori)
+        )
+        conn.commit()
+        conn.close()
+    return redirect(url_for('admin_panel', sekme='mesaj'))
 
 @app.route('/admin/toplu-onayla', methods=['POST'])
 def admin_toplu_onayla():
