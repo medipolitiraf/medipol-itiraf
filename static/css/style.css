@@ -466,36 +466,53 @@ nav a.itiraf-btn:hover { background: #0284c7; }
     opacity: 0.65;
 }
 
-/* Admin nick rozeti - alev efekti */
+/* Admin nick rozeti - gerçek alev efekti */
 .admin-nick-badge {
+    position: relative;
     display: inline-block;
-    background: linear-gradient(0deg, #7a0000 0%, #cc2200 25%, #ff4500 50%, #ff8c00 75%, #ffd700 100%);
-    background-size: 100% 300%;
-    background-position: 0% 100%;
-    color: #fff;
+    background: #111;
+    color: #ffd700;
     font-weight: 900;
     font-size: 12px;
     padding: 3px 12px;
     border-radius: 50px;
     letter-spacing: 0.5px;
-    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-    animation: alevYuksel 0.7s ease-in-out infinite alternate, alevSallan 0.25s ease-in-out infinite alternate;
+    text-shadow:
+        0 0 4px #fff,
+        0 0 8px #ffd700,
+        0 0 14px #ff8c00,
+        0 0 20px #ff4500,
+        0 0 30px #cc2200;
+    animation: alevMetin 0.4s ease-in-out infinite alternate, alevSallan 0.3s ease-in-out infinite alternate;
+    z-index: 0;
 }
 
-@keyframes alevYuksel {
-    from {
-        background-position: 0% 100%;
-        box-shadow: 0 0 8px #ff4500, 0 0 18px rgba(255,69,0,0.5);
-    }
-    to {
-        background-position: 0% 10%;
-        box-shadow: 0 0 16px #ffd700, 0 0 30px rgba(255,140,0,0.8);
-    }
+.admin-nick-badge::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50px;
+    background: linear-gradient(0deg, #cc0000, #ff4500, #ff8c00, #ffd700);
+    background-size: 100% 200%;
+    filter: blur(6px);
+    opacity: 0.85;
+    z-index: -1;
+    animation: alevArka 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes alevMetin {
+    from { text-shadow: 0 0 4px #fff, 0 0 8px #ffd700, 0 0 14px #ff8c00, 0 0 22px #ff4500, 0 0 32px #cc2200; }
+    to   { text-shadow: 0 0 6px #fff, 0 0 12px #fff7a0, 0 0 20px #ffd700, 0 0 30px #ff8c00, 0 0 42px #ff4500; }
+}
+
+@keyframes alevArka {
+    from { background-position: 0% 100%; opacity: 0.75; transform: scaleX(0.95); }
+    to   { background-position: 0% 0%;   opacity: 1;    transform: scaleX(1.05); }
 }
 
 @keyframes alevSallan {
-    from { transform: skewX(-2deg) scaleY(1); }
-    to   { transform: skewX(2deg) scaleY(1.04); }
+    from { transform: skewX(-1.5deg); }
+    to   { transform: skewX(1.5deg); }
 }
 
 .itiraf-baslik {
