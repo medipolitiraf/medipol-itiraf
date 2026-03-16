@@ -106,6 +106,7 @@ def init_db():
 @app.route('/')
 def index():
     kategori = request.args.get('kategori', 'itiraf')
+    filtre   = request.args.get('filtre', '')
     sayfa = int(request.args.get('sayfa', 1))
     limit = 10
     offset = (sayfa - 1) * limit
@@ -114,18 +115,31 @@ def index():
 
     # "itiraf" sekmesi tüm itiraf alt kategorilerini gösterir
     if kategori == 'itiraf':
-        placeholders = ','.join(['?' for _ in ITIRAF_KATEGORILER])
-        itiraflar = conn.execute(f"""
-            SELECT i.*, COUNT(y.id) as yorum_sayisi
-            FROM itiraflar i
-            LEFT JOIN yorumlar y ON y.itiraf_id = i.id
-            WHERE i.kategori IN ({placeholders}) AND i.onaylandi = 1
-            GROUP BY i.id
-            ORDER BY i.sabitlendi DESC, i.tarih DESC
-            LIMIT ? OFFSET ?
-        """, ITIRAF_KATEGORILER + [limit, offset]).fetchall()
-        toplam = conn.execute(f"SELECT COUNT(*) FROM itiraflar WHERE kategori IN ({placeholders}) AND onaylandi = 1", ITIRAF_KATEGORILER).fetchone()[0]
+        if filtre and filtre in ITIRAF_KATEGORILER:
+            itiraflar = conn.execute("""
+                SELECT i.*, COUNT(y.id) as yorum_sayisi
+                FROM itiraflar i
+                LEFT JOIN yorumlar y ON y.itiraf_id = i.id
+                WHERE i.kategori = ? AND i.onaylandi = 1
+                GROUP BY i.id
+                ORDER BY i.sabitlendi DESC, i.tarih DESC
+                LIMIT ? OFFSET ?
+            """, (filtre, limit, offset)).fetchall()
+            toplam = conn.execute("SELECT COUNT(*) FROM itiraflar WHERE kategori = ? AND onaylandi = 1", (filtre,)).fetchone()[0]
+        else:
+            placeholders = ','.join(['?' for _ in ITIRAF_KATEGORILER])
+            itiraflar = conn.execute(f"""
+                SELECT i.*, COUNT(y.id) as yorum_sayisi
+                FROM itiraflar i
+                LEFT JOIN yorumlar y ON y.itiraf_id = i.id
+                WHERE i.kategori IN ({placeholders}) AND i.onaylandi = 1
+                GROUP BY i.id
+                ORDER BY i.sabitlendi DESC, i.tarih DESC
+                LIMIT ? OFFSET ?
+            """, ITIRAF_KATEGORILER + [limit, offset]).fetchall()
+            toplam = conn.execute(f"SELECT COUNT(*) FROM itiraflar WHERE kategori IN ({placeholders}) AND onaylandi = 1", ITIRAF_KATEGORILER).fetchone()[0]
     else:
+        filtre = ''
         itiraflar = conn.execute("""
             SELECT i.*, COUNT(y.id) as yorum_sayisi
             FROM itiraflar i
@@ -164,11 +178,13 @@ def index():
     return render_template('index.html',
         itiraflar=itiraflar,
         kategori=kategori,
+        filtre=filtre,
         sayfa=sayfa,
         toplam_sayfa=toplam_sayfa,
         populer=populer,
         yeni_yorumlar=yeni_yorumlar,
-        kategori_etiketler=KATEGORI_ETIKETLER
+        kategori_etiketler=KATEGORI_ETIKETLER,
+        itiraf_kategoriler=ITIRAF_KATEGORILER
     )
 
 @app.route('/itiraf/<int:id>')
