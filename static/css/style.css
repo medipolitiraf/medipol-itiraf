@@ -481,12 +481,14 @@ nav a.itiraf-btn:hover { background: #0284c7; }
 .itiraf-baslik:hover { text-decoration: underline; }
 
 .kart-toggle {
-    display: inline-block;
+    display: block;
+    clear: both;
     font-size: 11px;
     color: #999;
     cursor: pointer;
     margin-bottom: 6px;
     user-select: none;
+    width: fit-content;
 }
 
 .kart-onizleme {
