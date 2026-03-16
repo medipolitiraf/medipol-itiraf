@@ -17,7 +17,7 @@
         </div>
 
         <!-- KATEGORİ PANEL -->
-        <div class="kateg-panel" id="kategPanel" {% if filtre %}style="display:flex;"{% endif %}>
+        <div class="kateg-panel" id="kategPanel" style="display:{{ 'flex' if filtre else 'none' }}">
             <a href="/?kategori=itiraf" class="kateg-link {{ 'active' if not filtre }}">Hepsi</a>
             {% for k in itiraf_kategoriler %}
             <a href="/?kategori=itiraf&filtre={{ k }}" class="kateg-link {{ 'active' if filtre == k }}">{{ kategori_etiketler[k] }}</a>
