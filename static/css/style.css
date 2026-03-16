@@ -357,38 +357,35 @@ nav a.itiraf-btn:hover { background: #0284c7; }
 }
 
 /* ========================
-   FİLTRE PİLLS
+   FİLTRE BARI
 ======================== */
 .filtre-pills {
     display: flex;
     flex-wrap: wrap;
-    gap: 7px;
+    gap: 0 4px;
     margin-bottom: 16px;
+    padding: 4px 0 8px 0;
+    border-bottom: 1px solid #e8edf5;
 }
 
 .filtre-pill {
-    padding: 5px 14px;
-    border-radius: 20px;
-    background: #fff;
-    color: #1a2b4a;
+    color: #1a6eb5;
     text-decoration: none;
-    font-size: 12px;
-    font-weight: 500;
-    border: 1.5px solid #d0ddf0;
-    transition: all 0.18s;
+    font-size: 13px;
+    padding: 2px 3px;
     white-space: nowrap;
+    transition: color 0.15s;
 }
 
 .filtre-pill:hover {
-    background: #e0f2fe;
-    border-color: #0ea5e9;
-    color: #0284c7;
+    color: #0ea5e9;
+    text-decoration: underline;
 }
 
 .filtre-pill.active {
-    background: #1a2b4a;
-    color: #fff;
-    border-color: #1a2b4a;
+    color: #1a2b4a;
+    font-weight: 700;
+    text-decoration: none;
 }
 
 /* ========================
