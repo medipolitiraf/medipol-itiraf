@@ -510,9 +510,11 @@ def deploy_hook(token):
     if token != DEPLOY_TOKEN:
         return 'Yetkisiz', 403
     try:
+        cwd = _os.path.dirname(__file__)
+        _subprocess.check_output(['git', 'fetch', 'origin'], cwd=cwd, stderr=_subprocess.STDOUT)
         result = _subprocess.check_output(
-            ['git', 'pull'],
-            cwd=_os.path.dirname(__file__),
+            ['git', 'reset', '--hard', 'origin/main'],
+            cwd=cwd,
             stderr=_subprocess.STDOUT
         ).decode()
         # PythonAnywhere API reload
