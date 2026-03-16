@@ -25,7 +25,7 @@ ADMIN_PASSWORD = hashlib.sha256('admin123'.encode()).hexdigest()
 # ── E-POSTA AYARLARI ──────────────────────────────
 EMAIL_GONDEREN  = 'burakadsiz96@gmail.com'   # gönderen gmail
 EMAIL_SIFRE     = 'pnmt xoyv zqvx juap'       # Gmail uygulama şifresi
-EMAIL_ALICI     = 'burakadsiz96@gmail.com'   # bildirim gidecek adres
+EMAIL_ALICI     = 'info@medipolitirafediyor.com'   # bildirim gidecek adres
 # ──────────────────────────────────────────────────
 
 def mail_gonder(konu, icerik):
