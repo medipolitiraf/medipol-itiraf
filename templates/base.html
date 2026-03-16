@@ -183,5 +183,72 @@
         });
     }
 </script>
+
+<!-- ALEV PARTİKÜL SİSTEMİ -->
+<style>
+@keyframes alevCik {
+    0%   { transform: translateY(0) translateX(0) scale(1); opacity: 1; }
+    40%  { transform: translateY(-12px) translateX(var(--dx)) scale(0.8); opacity: 0.9; }
+    100% { transform: translateY(-28px) translateX(var(--dx2)) scale(0.2); opacity: 0; }
+}
+.alev-partikul {
+    position: absolute;
+    border-radius: 50% 50% 30% 30%;
+    pointer-events: none;
+    z-index: 999;
+    animation: alevCik var(--sure) ease-out forwards;
+}
+</style>
+<script>
+(function() {
+    var renkler = [
+        'radial-gradient(ellipse, #fff7a0, #ffd700, transparent)',
+        'radial-gradient(ellipse, #ffd700, #ff8c00, transparent)',
+        'radial-gradient(ellipse, #ff8c00, #ff4500, transparent)',
+        'radial-gradient(ellipse, #ff4500, #cc2200, transparent)'
+    ];
+
+    function alevcik(badge) {
+        var p = document.createElement('div');
+        p.className = 'alev-partikul';
+        var genislik = badge.offsetWidth;
+        var x = 4 + Math.random() * (genislik - 8);
+        var boyut = 3 + Math.random() * 5;
+        var sure = (0.4 + Math.random() * 0.5).toFixed(2);
+        var dx  = (Math.random() * 10 - 5).toFixed(1);
+        var dx2 = (Math.random() * 16 - 8).toFixed(1);
+        p.style.cssText = [
+            'left:' + x + 'px',
+            'bottom:95%',
+            'width:' + boyut + 'px',
+            'height:' + (boyut * 1.5) + 'px',
+            'background:' + renkler[Math.floor(Math.random() * renkler.length)],
+            '--sure:' + sure + 's',
+            '--dx:' + dx + 'px',
+            '--dx2:' + dx2 + 'px'
+        ].join(';');
+        badge.appendChild(p);
+        setTimeout(function() { p.remove(); }, sure * 1000 + 50);
+    }
+
+    function baslatAlev() {
+        var badges = document.querySelectorAll('.admin-nick-badge');
+        if (!badges.length) return;
+        badges.forEach(function(b) { b.style.position = 'relative'; b.style.overflow = 'visible'; });
+        setInterval(function() {
+            badges.forEach(function(b) {
+                var sayi = Math.floor(Math.random() * 3) + 1;
+                for (var i = 0; i < sayi; i++) alevcik(b);
+            });
+        }, 80);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', baslatAlev);
+    } else {
+        baslatAlev();
+    }
+})();
+</script>
 </body>
 </html>
