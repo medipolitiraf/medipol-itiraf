@@ -466,53 +466,45 @@ nav a.itiraf-btn:hover { background: #0284c7; }
     opacity: 0.65;
 }
 
-/* Admin nick rozeti - gerçek alev efekti */
+/* Admin nick rozeti - Metin2 tarzı kor efekti */
 .admin-nick-badge {
     position: relative;
     display: inline-block;
-    background: #111;
-    color: #ffd700;
-    font-weight: 900;
-    font-size: 12px;
-    padding: 3px 12px;
+    background: #0d0d0d;
+    color: #ffcc44;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 2px 9px;
     border-radius: 50px;
-    letter-spacing: 0.5px;
-    text-shadow:
-        0 0 4px #fff,
-        0 0 8px #ffd700,
-        0 0 14px #ff8c00,
-        0 0 20px #ff4500,
-        0 0 30px #cc2200;
-    animation: alevMetin 0.4s ease-in-out infinite alternate, alevSallan 0.3s ease-in-out infinite alternate;
+    letter-spacing: 0.8px;
+    text-shadow: 0 0 3px #fff, 0 0 6px #ffd700, 0 0 10px #ff8c00;
+    border: 1px solid rgba(255,140,0,0.4);
+    animation: korParlak 0.6s ease-in-out infinite alternate;
     z-index: 0;
+    overflow: visible;
 }
 
 .admin-nick-badge::before {
     content: '';
     position: absolute;
-    inset: -4px;
+    inset: -2px;
     border-radius: 50px;
-    background: linear-gradient(0deg, #cc0000, #ff4500, #ff8c00, #ffd700);
+    background: linear-gradient(0deg, #8b1a00, #cc3300, #ff6600, #ffaa00);
     background-size: 100% 200%;
-    filter: blur(6px);
-    opacity: 0.85;
+    filter: blur(4px);
+    opacity: 0.5;
     z-index: -1;
-    animation: alevArka 0.5s ease-in-out infinite alternate;
+    animation: korArka 0.5s ease-in-out infinite alternate;
 }
 
-@keyframes alevMetin {
-    from { text-shadow: 0 0 4px #fff, 0 0 8px #ffd700, 0 0 14px #ff8c00, 0 0 22px #ff4500, 0 0 32px #cc2200; }
-    to   { text-shadow: 0 0 6px #fff, 0 0 12px #fff7a0, 0 0 20px #ffd700, 0 0 30px #ff8c00, 0 0 42px #ff4500; }
+@keyframes korParlak {
+    from { text-shadow: 0 0 3px #fff, 0 0 6px #ffd700, 0 0 10px #ff8c00; border-color: rgba(255,120,0,0.3); }
+    to   { text-shadow: 0 0 4px #fff, 0 0 9px #ffe066, 0 0 14px #ffaa00; border-color: rgba(255,180,0,0.6); }
 }
 
-@keyframes alevArka {
-    from { background-position: 0% 100%; opacity: 0.75; transform: scaleX(0.95); }
-    to   { background-position: 0% 0%;   opacity: 1;    transform: scaleX(1.05); }
-}
-
-@keyframes alevSallan {
-    from { transform: skewX(-1.5deg); }
-    to   { transform: skewX(1.5deg); }
+@keyframes korArka {
+    from { background-position: 0% 100%; opacity: 0.4; }
+    to   { background-position: 0% 0%;   opacity: 0.65; }
 }
 
 .itiraf-baslik {
