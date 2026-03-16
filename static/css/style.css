@@ -357,35 +357,46 @@ nav a.itiraf-btn:hover { background: #0284c7; }
 }
 
 /* ========================
-   FİLTRE BARI
+   KATEGORİ TAB + PANEL
 ======================== */
-.filtre-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0 4px;
-    margin-bottom: 16px;
-    padding: 4px 0 8px 0;
-    border-bottom: 1px solid #e8edf5;
+.kateg-tab-btn {
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
 }
 
-.filtre-pill {
+.kateg-panel {
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    background: #f0f5ff;
+    border: 1px solid #d0ddf0;
+    border-radius: 8px;
+}
+
+.kateg-link {
     color: #1a6eb5;
     text-decoration: none;
     font-size: 13px;
-    padding: 2px 3px;
+    padding: 3px 10px;
+    border-radius: 14px;
+    border: 1px solid transparent;
+    transition: all 0.15s;
     white-space: nowrap;
-    transition: color 0.15s;
 }
 
-.filtre-pill:hover {
-    color: #0ea5e9;
-    text-decoration: underline;
+.kateg-link:hover {
+    background: #e0f2fe;
+    color: #0284c7;
+    border-color: #bae6fd;
 }
 
-.filtre-pill.active {
-    color: #1a2b4a;
-    font-weight: 700;
-    text-decoration: none;
+.kateg-link.active {
+    background: #1a2b4a;
+    color: #fff;
+    border-color: #1a2b4a;
+    font-weight: 600;
 }
 
 /* ========================

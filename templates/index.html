@@ -9,21 +9,27 @@
 
         <!-- TABS -->
         <div class="tabs">
-            <a href="/?kategori=itiraf" class="tab-btn {{ 'active' if kategori == 'itiraf' }}">İtiraflar</a>
+            <a href="/?kategori=itiraf" class="tab-btn {{ 'active' if kategori == 'itiraf' and not filtre }}">İtiraflar</a>
             <a href="/?kategori=ilan" class="tab-btn {{ 'active' if kategori == 'ilan' }}">İlanlar</a>
             <a href="/?kategori=kayip" class="tab-btn {{ 'active' if kategori == 'kayip' }}">Kayıp Eşya</a>
             <a href="/?kategori=soru" class="tab-btn {{ 'active' if kategori == 'soru' }}">Soru-Cevap</a>
+            <button class="tab-btn kateg-tab-btn {{ 'active' if filtre }}" onclick="toggleKategoriPanel()" id="kategTabBtn">☰ Kategoriler</button>
         </div>
 
-        <!-- FİLTRE PİLLS (sadece İtiraflar sekmesinde) -->
-        {% if kategori == 'itiraf' %}
-        <div class="filtre-pills">
-            <a href="/?kategori=itiraf" class="filtre-pill {{ 'active' if not filtre }}">Hepsi</a>
+        <!-- KATEGORİ PANEL -->
+        <div class="kateg-panel" id="kategPanel" style="display:{{ 'flex' if filtre else 'none' }};">
+            <a href="/?kategori=itiraf" class="kateg-link {{ 'active' if not filtre }}">Hepsi</a>
             {% for k in itiraf_kategoriler %}
-            <a href="/?kategori=itiraf&filtre={{ k }}" class="filtre-pill {{ 'active' if filtre == k }}">{{ kategori_etiketler[k] }}</a>
+            <a href="/?kategori=itiraf&filtre={{ k }}" class="kateg-link {{ 'active' if filtre == k }}">{{ kategori_etiketler[k] }}</a>
             {% endfor %}
         </div>
-        {% endif %}
+
+        <script>
+        function toggleKategoriPanel() {
+            var panel = document.getElementById('kategPanel');
+            panel.style.display = panel.style.display === 'none' ? 'flex' : 'none';
+        }
+        </script>
 
         {% if request.args.get('itiraf') == 'beklemede' %}
         <div style="background:#d4edda; border:1px solid #28a745; border-radius:6px; padding:12px 16px; margin-bottom:12px; font-size:13px; color:#155724;">
