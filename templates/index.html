@@ -30,6 +30,13 @@
             var panel = document.getElementById('kategPanel');
             panel.style.display = (panel.style.display === 'flex' || getComputedStyle(panel).display === 'flex') ? 'none' : 'flex';
         }
+        function toggleKart(id) {
+            var el = document.getElementById('onizleme-' + id);
+            var ikon = document.getElementById('ikon-' + id);
+            var acik = el.style.display === 'block';
+            el.style.display = acik ? 'none' : 'block';
+            ikon.textContent = acik ? '▼' : '▲';
+        }
         function smoothScrollToPopuler(e) {
             e.preventDefault();
             var el = document.getElementById('populer-bolum');
@@ -48,6 +55,11 @@
             <div class="itiraf-card {% if itiraf.sabitlendi %}itiraf-sabitli{% endif %}">
                 {% if itiraf.sabitlendi %}<span class="sabit-rozet-kart">📌 Sabitlendi</span>{% endif %}
                 <a href="/itiraf/{{ itiraf.id }}" class="itiraf-baslik">{{ itiraf.baslik }}</a>
+                <span class="kart-toggle" onclick="toggleKart({{ itiraf.id }})" id="ikon-{{ itiraf.id }}">▼</span>
+                <div class="kart-onizleme" id="onizleme-{{ itiraf.id }}" style="display:none;">
+                    {{ itiraf.icerik[:300] }}{% if itiraf.icerik|length > 300 %}...{% endif %}
+                    <br><a href="/itiraf/{{ itiraf.id }}" class="devamini-oku-link">Devamını oku →</a>
+                </div>
                 <div class="itiraf-meta">
                     <span class="nick-label">Nick:</span> <span class="nick">{{ itiraf.nick }}</span>
                     <span>|</span>

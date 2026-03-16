@@ -480,6 +480,35 @@ nav a.itiraf-btn:hover { background: #0284c7; }
 
 .itiraf-baslik:hover { text-decoration: underline; }
 
+.kart-toggle {
+    display: inline-block;
+    font-size: 11px;
+    color: #999;
+    cursor: pointer;
+    margin-bottom: 6px;
+    user-select: none;
+}
+
+.kart-onizleme {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.55;
+    margin-bottom: 8px;
+    padding: 8px 0;
+    border-top: 1px solid #f0f0f0;
+}
+
+.devamini-oku-link {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 12px;
+    color: #0ea5e9;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.devamini-oku-link:hover { text-decoration: underline; }
+
 .itiraf-icerik {
     color: #555;
     line-height: 1.5;
