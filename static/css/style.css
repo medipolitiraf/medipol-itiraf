@@ -378,18 +378,24 @@ nav a.itiraf-btn:hover { background: #0284c7; }
 }
 
 .populer-kart {
-    border-top: 3px solid #ff6b35;
+    border-top: none !important;
+    overflow: hidden;
+    padding: 0 !important;
 }
 
-.populer-baslik {
+.populer-kart .populer-baslik {
     font-size: 13px;
     font-weight: 800;
     color: #fff;
-    margin: -16px -16px 14px -16px;
-    padding: 11px 16px;
-    border-radius: 8px 8px 0 0;
+    padding: 12px 16px;
     background: linear-gradient(135deg, #ff6b35, #f7931e);
     letter-spacing: 0.3px;
+    margin: 0;
+}
+
+.populer-kart .populer-liste,
+.populer-kart p {
+    padding: 12px 16px;
 }
 
 .kateg-panel {
