@@ -374,6 +374,10 @@ def ara():
 def sss():
     return render_template('sss.html')
 
+@app.route('/gizlilik-politikasi')
+def gizlilik():
+    return render_template('gizlilik.html')
+
 @app.route('/iletisim')
 def iletisim():
     return render_template('iletisim.html')
