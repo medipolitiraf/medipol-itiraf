@@ -264,7 +264,7 @@ def itiraf_et():
             <tr style="background:#f9f9f9"><td style="padding:8px; font-weight:bold;">İçerik</td><td style="padding:8px;">{icerik[:300]}</td></tr>
         </table>
         <br>
-        <a href="http://localhost:5000/admin/panel" style="background:#1a2b4a; color:#fff; padding:10px 20px; border-radius:6px; text-decoration:none;">
+        <a href="https://www.medipolitirafediyor.com/admin/panel" style="background:#1a2b4a; color:#fff; padding:10px 20px; border-radius:6px; text-decoration:none;">
             Admin Paneline Git →
         </a>
         '''
@@ -299,7 +299,7 @@ def yorum_yap():
             <tr><td style="padding:8px; font-weight:bold;">Yorum</td><td style="padding:8px;">{yorum[:300]}</td></tr>
         </table>
         <br>
-        <a href="http://localhost:5000/admin/panel?sekme=yorumlar" style="background:#1a2b4a; color:#fff; padding:10px 20px; border-radius:6px; text-decoration:none;">
+        <a href="https://www.medipolitirafediyor.com/admin/panel?sekme=yorumlar" style="background:#1a2b4a; color:#fff; padding:10px 20px; border-radius:6px; text-decoration:none;">
             Yorumları Yönet →
         </a>
         '''
