@@ -281,6 +281,7 @@
                         <a href="/admin/sabitle/{{ itiraf.id }}" class="btn-sabitle {% if itiraf.sabitlendi %}sabitli{% endif %}">
                             {% if itiraf.sabitlendi %}📌 Çöz{% else %}📌 Sabitle{% endif %}
                         </a>
+                        <button type="button" class="btn-onizle" style="background:#8b5cf6;" onclick="toggleDuzenle({{ itiraf.id }})">✏️ Düzenle</button>
                         <a href="/admin/sil/{{ itiraf.id }}"
                             onclick="return confirm('Bu itirafı silmek istediğinizden emin misiniz?')"
                             class="btn-onizle" style="background:#e74c3c;">Sil</a>
@@ -288,6 +289,24 @@
                 </tr>
                 <tr class="icerik-row" id="icerik-{{ itiraf.id }}">
                     <td colspan="8">{{ itiraf.icerik }}</td>
+                </tr>
+                <tr class="duzenle-row" id="duzenle-{{ itiraf.id }}" style="display:none;">
+                    <td colspan="8" style="padding:12px; background:#f8f6ff; border-top:2px solid #8b5cf6;">
+                        <form method="POST" action="/admin/duzenle/{{ itiraf.id }}">
+                            <div style="margin-bottom:8px;">
+                                <label style="font-size:11px; font-weight:700; color:#666; display:block; margin-bottom:3px;">BAŞLIK</label>
+                                <input type="text" name="baslik" value="{{ itiraf.baslik }}" style="width:100%; padding:7px 10px; border:1px solid #d0c8f0; border-radius:6px; font-size:13px; box-sizing:border-box;">
+                            </div>
+                            <div style="margin-bottom:10px;">
+                                <label style="font-size:11px; font-weight:700; color:#666; display:block; margin-bottom:3px;">İÇERİK</label>
+                                <textarea name="icerik" rows="4" style="width:100%; padding:7px 10px; border:1px solid #d0c8f0; border-radius:6px; font-size:13px; box-sizing:border-box; resize:vertical;">{{ itiraf.icerik }}</textarea>
+                            </div>
+                            <div style="display:flex; gap:8px;">
+                                <button type="submit" style="background:#8b5cf6; color:#fff; border:none; border-radius:6px; padding:7px 16px; font-size:12px; font-weight:700; cursor:pointer;">💾 Kaydet</button>
+                                <button type="button" onclick="toggleDuzenle({{ itiraf.id }})" style="background:#aaa; color:#fff; border:none; border-radius:6px; padding:7px 14px; font-size:12px; cursor:pointer;">İptal</button>
+                            </div>
+                        </form>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -353,6 +372,11 @@ function toggleIcerik(id, btn) {
     const isOpen = row.classList.toggle('open');
     btn.textContent = isOpen ? 'Gizle' : 'İçerik';
     btn.classList.toggle('acik', isOpen);
+}
+
+function toggleDuzenle(id) {
+    var row = document.getElementById('duzenle-' + id);
+    row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
 }
 
 function tumunuSec(cb) {

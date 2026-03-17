@@ -425,6 +425,19 @@ def admin_panel():
                            sekme=sekme, filtre=filtre, stats=stats,
                            bekleyen_yorum=stats['bekleyen_yorum'])
 
+@app.route('/admin/duzenle/<int:id>', methods=['POST'])
+def admin_duzenle(id):
+    if not session.get('admin'):
+        return redirect(url_for('admin_login'))
+    baslik = request.form.get('baslik', '').strip()
+    icerik = request.form.get('icerik', '').strip()
+    if baslik and icerik:
+        conn = get_db()
+        conn.execute("UPDATE itiraflar SET baslik = ?, icerik = ? WHERE id = ?", (baslik, icerik, id))
+        conn.commit()
+        conn.close()
+    return redirect(url_for('admin_panel') + '?sekme=itiraflar')
+
 @app.route('/admin/sil/<int:id>')
 def admin_sil(id):
     if not session.get('admin'):
