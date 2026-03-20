@@ -105,6 +105,11 @@ def init_db():
     conn.commit()
     conn.close()
 
+@app.route('/ads.txt')
+def ads_txt():
+    from flask import Response
+    return Response("google.com, pub-2748814414536540, DIRECT, f08c47fec0942fa0\n", mimetype='text/plain')
+
 @app.route('/')
 def index():
     kategori = request.args.get('kategori', 'itiraf')
