@@ -115,6 +115,25 @@
             .yorum-tablosu td:nth-child(7) { display:flex !important; flex-wrap:wrap; gap:5px; padding-top:8px; }
 
             .btn-onizle, .btn-sabitle { font-size:12px; padding:7px 11px; }
+
+            /* Düzenleme formu mobil fix */
+            .duzenle-row { display:none !important; }
+            .duzenle-row.open { display:block !important; }
+            .duzenle-row.open td {
+                display:block !important;
+                width:100% !important;
+                max-width:100% !important;
+                box-sizing:border-box !important;
+                overflow:hidden !important;
+                padding:12px !important;
+            }
+            .duzenle-row input,
+            .duzenle-row textarea,
+            .duzenle-row select {
+                width:100% !important;
+                max-width:100% !important;
+                box-sizing:border-box !important;
+            }
         }
 
         @media (max-width: 480px) {
@@ -297,6 +316,27 @@
                                 <label style="font-size:11px; font-weight:700; color:#666; display:block; margin-bottom:3px;">BAŞLIK</label>
                                 <input type="text" name="baslik" value="{{ itiraf.baslik }}" style="width:100%; padding:7px 10px; border:1px solid #d0c8f0; border-radius:6px; font-size:13px; box-sizing:border-box;">
                             </div>
+                            <div style="margin-bottom:8px;">
+                                <label style="font-size:11px; font-weight:700; color:#666; display:block; margin-bottom:3px;">KATEGORİ</label>
+                                <select name="kategori" style="width:100%; padding:7px 10px; border:1px solid #d0c8f0; border-radius:6px; font-size:13px; box-sizing:border-box;">
+                                    <optgroup label="İtiraf Kategorileri">
+                                        <option value="itiraf" {% if itiraf.kategori == 'itiraf' %}selected{% endif %}>İtiraf</option>
+                                        <option value="ask" {% if itiraf.kategori == 'ask' %}selected{% endif %}>Aşk</option>
+                                        <option value="overheard" {% if itiraf.kategori == 'overheard' %}selected{% endif %}>Overheard</option>
+                                        <option value="komik" {% if itiraf.kategori == 'komik' %}selected{% endif %}>Komik</option>
+                                        <option value="okul" {% if itiraf.kategori == 'okul' %}selected{% endif %}>Okul</option>
+                                        <option value="pismanlik" {% if itiraf.kategori == 'pismanlik' %}selected{% endif %}>Pişmanlık</option>
+                                        <option value="protesto" {% if itiraf.kategori == 'protesto' %}selected{% endif %}>Protesto</option>
+                                        <option value="fikir" {% if itiraf.kategori == 'fikir' %}selected{% endif %}>Fikir Verin</option>
+                                        <option value="diger" {% if itiraf.kategori == 'diger' %}selected{% endif %}>Diğer</option>
+                                    </optgroup>
+                                    <optgroup label="Diğer Sekmeler">
+                                        <option value="ilan" {% if itiraf.kategori == 'ilan' %}selected{% endif %}>İlan</option>
+                                        <option value="kayip_esya" {% if itiraf.kategori == 'kayip_esya' %}selected{% endif %}>Kayıp Eşya</option>
+                                        <option value="soru_cevap" {% if itiraf.kategori == 'soru_cevap' %}selected{% endif %}>Soru-Cevap</option>
+                                    </optgroup>
+                                </select>
+                            </div>
                             <div style="margin-bottom:10px;">
                                 <label style="font-size:11px; font-weight:700; color:#666; display:block; margin-bottom:3px;">İÇERİK</label>
                                 <textarea name="icerik" rows="4" style="width:100%; padding:7px 10px; border:1px solid #d0c8f0; border-radius:6px; font-size:13px; box-sizing:border-box; resize:vertical;">{{ itiraf.icerik }}</textarea>
@@ -376,7 +416,12 @@ function toggleIcerik(id, btn) {
 
 function toggleDuzenle(id) {
     var row = document.getElementById('duzenle-' + id);
-    row.style.display = row.style.display === 'none' ? 'table-row' : 'none';
+    var isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+        row.classList.toggle('open');
+    } else {
+        row.style.display = (row.style.display === 'none' || row.style.display === '') ? 'table-row' : 'none';
+    }
 }
 
 function tumunuSec(cb) {

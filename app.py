@@ -440,9 +440,10 @@ def admin_duzenle(id):
         return redirect(url_for('admin_login'))
     baslik = request.form.get('baslik', '').strip()
     icerik = request.form.get('icerik', '').strip()
+    kategori = request.form.get('kategori', '').strip()
     if baslik and icerik:
         conn = get_db()
-        conn.execute("UPDATE itiraflar SET baslik = ?, icerik = ? WHERE id = ?", (baslik, icerik, id))
+        conn.execute("UPDATE itiraflar SET baslik = ?, icerik = ?, kategori = ? WHERE id = ?", (baslik, icerik, kategori, id))
         conn.commit()
         conn.close()
     return redirect(url_for('admin_panel') + '?sekme=itiraflar')
